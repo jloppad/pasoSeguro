@@ -19,6 +19,12 @@ class Registro
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $horaEntrada = null;
 
+    #[ORM\ManyToOne(inversedBy: 'registros')]
+    private ?Usuario $responsable = null;
+
+    #[ORM\ManyToOne(inversedBy: 'registros')]
+    private ?Estudiante $estudiante = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +50,30 @@ class Registro
     public function setHoraEntrada(\DateTimeInterface $horaEntrada): static
     {
         $this->horaEntrada = $horaEntrada;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Usuario
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Usuario $responsable): static
+    {
+        $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getEstudiante(): ?Estudiante
+    {
+        return $this->estudiante;
+    }
+
+    public function setEstudiante(?Estudiante $estudiante): static
+    {
+        $this->estudiante = $estudiante;
 
         return $this;
     }

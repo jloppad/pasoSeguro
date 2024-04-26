@@ -20,9 +20,13 @@ class Estudiante extends Persona
     #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'estudiantes')]
     private Collection $grupos;
 
+    #[ORM\OneToMany(targetEntity: Registro::class, mappedBy: 'estudiante')]
+    private Collection $registros;
+
     public function __construct()
     {
         $this->grupos = new ArrayCollection();
+        $this->registros = new ArrayCollection();
     }
 
     public function getNie(): ?int
@@ -71,6 +75,36 @@ class Estudiante extends Persona
     {
         if ($this->grupos->removeElement($grupo)) {
             $grupo->removeEstudiante($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Registro>
+     */
+    public function getRegistros(): Collection
+    {
+        return $this->registros;
+    }
+
+    public function addRegistro(Registro $registro): static
+    {
+        if (!$this->registros->contains($registro)) {
+            $this->registros->add($registro);
+            $registro->setEstudiante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistro(Registro $registro): static
+    {
+        if ($this->registros->removeElement($registro)) {
+            // set the owning side to null (unless already changed)
+            if ($registro->getEstudiante() === $this) {
+                $registro->setEstudiante(null);
+            }
         }
 
         return $this;
