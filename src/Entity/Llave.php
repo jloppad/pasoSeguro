@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LlaveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LlaveRepository::class)]
@@ -21,6 +23,14 @@ class Llave
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $horaDevuelta = null;
+
+    #[ORM\OneToMany(targetEntity: Registro::class, mappedBy: 'llave')]
+    private Collection $registros;
+
+    public function __construct()
+    {
+        $this->registros = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -64,6 +74,36 @@ class Llave
     public function setDescripcion(string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Registro>
+     */
+    public function getRegistros(): Collection
+    {
+        return $this->registros;
+    }
+
+    public function addRegistro(Registro $registro): static
+    {
+        if (!$this->registros->contains($registro)) {
+            $this->registros->add($registro);
+            $registro->setLlave($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistro(Registro $registro): static
+    {
+        if ($this->registros->removeElement($registro)) {
+            // set the owning side to null (unless already changed)
+            if ($registro->getLlave() === $this) {
+                $registro->setLlave(null);
+            }
+        }
 
         return $this;
     }

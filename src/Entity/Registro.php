@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RegistroRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RegistroRepository::class)]
@@ -24,6 +26,18 @@ class Registro
 
     #[ORM\ManyToOne(inversedBy: 'registros')]
     private ?Estudiante $estudiante = null;
+
+    #[ORM\Column(nullable: true)]
+    #[ORM\ManyToOne(inversedBy: 'registros')]
+    private ?Llave $llave = null;
+
+    #[ORM\ManyToMany(targetEntity: Motivo::class, mappedBy: 'registros')]
+    private Collection $motivos;
+
+    public function __construct()
+    {
+        $this->motivos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +88,42 @@ class Registro
     public function setEstudiante(?Estudiante $estudiante): static
     {
         $this->estudiante = $estudiante;
+
+        return $this;
+    }
+
+    public function getLlave(): ?Llave
+    {
+        return $this->llave;
+    }
+
+    public function setLlave(?Llave $llave): static
+    {
+        $this->llave = $llave;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Motivo>
+     */
+    public function getMotivos(): Collection
+    {
+        return $this->motivos;
+    }
+
+    public function addMotivo(Motivo $motivo): static
+    {
+        if (!$this->motivos->contains($motivo)) {
+            $this->motivos->add($motivo);
+        }
+
+        return $this;
+    }
+
+    public function removeMotivo(Motivo $motivo): static
+    {
+        $this->motivos->removeElement($motivo);
 
         return $this;
     }
