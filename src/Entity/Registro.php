@@ -27,8 +27,8 @@ class Registro
     #[ORM\ManyToOne(inversedBy: 'registros')]
     private ?Estudiante $estudiante = null;
 
-    #[ORM\Column(nullable: true)]
     #[ORM\ManyToOne(inversedBy: 'registros')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Llave $llave = null;
 
     #[ORM\ManyToMany(targetEntity: Motivo::class, mappedBy: 'registros')]
