@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GrupoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GrupoRepository::class)]
@@ -18,6 +20,18 @@ class Grupo
 
     #[ORM\ManyToOne(inversedBy: 'grupos')]
     private ?CursoAcademico $cursoAcademico = null;
+
+    #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: 'grupos')]
+    private Collection $usuarios;
+
+    #[ORM\ManyToMany(targetEntity: Estudiante::class, inversedBy: 'grupos')]
+    private Collection $estudiantes;
+
+    public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+        $this->estudiantes = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -49,6 +63,57 @@ class Grupo
     public function setCursoAcademico(?CursoAcademico $cursoAcademico): static
     {
         $this->cursoAcademico = $cursoAcademico;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(Usuario $usuario): static
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios->add($usuario);
+            $usuario->addGrupo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(Usuario $usuario): static
+    {
+        if ($this->usuarios->removeElement($usuario)) {
+            $usuario->removeGrupo($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Estudiante>
+     */
+    public function getEstudiantes(): Collection
+    {
+        return $this->estudiantes;
+    }
+
+    public function addEstudiante(Estudiante $estudiante): static
+    {
+        if (!$this->estudiantes->contains($estudiante)) {
+            $this->estudiantes->add($estudiante);
+        }
+
+        return $this;
+    }
+
+    public function removeEstudiante(Estudiante $estudiante): static
+    {
+        $this->estudiantes->removeElement($estudiante);
 
         return $this;
     }

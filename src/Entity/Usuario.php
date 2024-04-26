@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
@@ -22,6 +24,14 @@ class Usuario extends Persona
 
     #[ORM\Column]
     private ?bool $esAdmin = null;
+
+    #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'usuarios')]
+    private Collection $grupos;
+
+    public function __construct()
+    {
+        $this->grupos = new ArrayCollection();
+    }
 
     public function getUsername(): ?string
     {
@@ -78,6 +88,30 @@ class Usuario extends Persona
     public function setEsAdmin(bool $esAdmin): static
     {
         $this->esAdmin = $esAdmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Grupo>
+     */
+    public function getGrupos(): Collection
+    {
+        return $this->grupos;
+    }
+
+    public function addGrupo(Grupo $grupo): static
+    {
+        if (!$this->grupos->contains($grupo)) {
+            $this->grupos->add($grupo);
+        }
+
+        return $this;
+    }
+
+    public function removeGrupo(Grupo $grupo): static
+    {
+        $this->grupos->removeElement($grupo);
 
         return $this;
     }
