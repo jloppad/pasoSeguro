@@ -26,7 +26,6 @@ class Persona
         return $this.$this->getNombre() . " " . $this->getApellidos();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
