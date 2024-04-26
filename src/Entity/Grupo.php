@@ -16,6 +16,9 @@ class Grupo
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
+    #[ORM\ManyToOne(inversedBy: 'grupos')]
+    private ?CursoAcademico $cursoAcademico = null;
+
     public function __toString(): string
     {
         return $this->descripcion;
@@ -34,6 +37,18 @@ class Grupo
     public function setDescripcion(string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getCursoAcademico(): ?CursoAcademico
+    {
+        return $this->cursoAcademico;
+    }
+
+    public function setCursoAcademico(?CursoAcademico $cursoAcademico): static
+    {
+        $this->cursoAcademico = $cursoAcademico;
 
         return $this;
     }

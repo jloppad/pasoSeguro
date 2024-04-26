@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CursoAcademicoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class CursoAcademico
 
     #[ORM\Column(type: 'date')]
     private ?\DateTimeInterface $fechaFinal = null;
+
+    #[ORM\OneToMany(targetEntity: Grupo::class, mappedBy: 'cursoAcademico')]
+    private Collection $grupos;
+
+    public function __construct()
+    {
+        $this->grupos = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -65,6 +75,36 @@ class CursoAcademico
     public function setFechaFinal(\DateTimeInterface $fechaFinal): static
     {
         $this->fechaFinal = $fechaFinal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Grupo>
+     */
+    public function getGrupos(): Collection
+    {
+        return $this->grupos;
+    }
+
+    public function addGrupo(Grupo $grupo): static
+    {
+        if (!$this->grupos->contains($grupo)) {
+            $this->grupos->add($grupo);
+            $grupo->setCursoAcademico($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGrupo(Grupo $grupo): static
+    {
+        if ($this->grupos->removeElement($grupo)) {
+            // set the owning side to null (unless already changed)
+            if ($grupo->getCursoAcademico() === $this) {
+                $grupo->setCursoAcademico(null);
+            }
+        }
 
         return $this;
     }
