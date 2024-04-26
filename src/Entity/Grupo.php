@@ -16,6 +16,11 @@ class Grupo
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
+    public function __toString(): string
+    {
+        return $this->descripcion;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

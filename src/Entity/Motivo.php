@@ -19,6 +19,11 @@ class Motivo
     #[ORM\Column]
     private ?int $numeroOrden = null;
 
+    public function __toString(): string
+    {
+        return $this->getDescripcion();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

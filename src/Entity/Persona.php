@@ -23,7 +23,7 @@ class Persona
 
     public function __toString(): string
     {
-        return $this.$this->getNombre() . " " . $this->getApellidos();
+        return $this->getNombre() . " " . $this->getApellidos();
     }
 
     public function getId(): ?int

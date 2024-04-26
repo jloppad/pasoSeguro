@@ -23,6 +23,11 @@ class CursoAcademico
     #[ORM\Column(type: 'date')]
     private ?\DateTimeInterface $fechaFinal = null;
 
+    public function __toString(): string
+    {
+        return $this->descripcion;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

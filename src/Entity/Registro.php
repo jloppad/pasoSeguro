@@ -16,7 +16,7 @@ class Registro
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $horaSalida = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $horaEntrada = null;
 
     public function getId(): ?int
