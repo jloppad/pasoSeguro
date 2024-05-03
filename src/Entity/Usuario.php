@@ -6,24 +6,26 @@ use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario extends Persona
+class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    #[ORM\Column(length: 15, unique: true)]
+    private ?string $userName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $pass = null;
+    private ?string $password = null;
 
     #[ORM\Column]
-    private ?bool $esDocente = null;
+    private ?bool $docente = null;
 
     #[ORM\Column]
-    private ?bool $esConserje = null;
+    private ?bool $conserje = null;
 
     #[ORM\Column]
-    private ?bool $esAdmin = null;
+    private ?bool $admin = null;
 
     #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'usuarios')]
     private Collection $grupos;
@@ -37,61 +39,61 @@ class Usuario extends Persona
         $this->registros = new ArrayCollection();
     }
 
-    public function getUsername(): ?string
+    public function getUserName(): ?string
     {
-        return $this->username;
+        return $this->userName;
     }
 
-    public function setUsername(?string $username): Usuario
+    public function setUserName(?string $userName): Usuario
     {
-        $this->username = $username;
+        $this->userName = $userName;
         return $this;
     }
 
-    public function getPass(): ?string
+    public function getPassword(): ?string
     {
-        return $this->pass;
+        return $this->password;
     }
 
-    public function setPass(string $pass): static
+    public function setPassword(string $password): static
     {
-        $this->pass = $pass;
-
-        return $this;
-    }
-
-    public function isEsDocente(): ?bool
-    {
-        return $this->esDocente;
-    }
-
-    public function setEsDocente(bool $esDocente): static
-    {
-        $this->esDocente = $esDocente;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function isEsConserje(): ?bool
+    public function isDocente(): ?bool
     {
-        return $this->esConserje;
+        return $this->docente;
     }
 
-    public function setEsConserje(bool $esConserje): static
+    public function setDocente(bool $docente): static
     {
-        $this->esConserje = $esConserje;
+        $this->docente = $docente;
 
         return $this;
     }
 
-    public function isEsAdmin(): ?bool
+    public function isConserje(): ?bool
     {
-        return $this->esAdmin;
+        return $this->conserje;
     }
 
-    public function setEsAdmin(bool $esAdmin): static
+    public function setConserje(bool $conserje): static
     {
-        $this->esAdmin = $esAdmin;
+        $this->conserje = $conserje;
+
+        return $this;
+    }
+
+    public function isAdmin(): ?bool
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): static
+    {
+        $this->admin = $admin;
 
         return $this;
     }
@@ -150,5 +152,36 @@ class Usuario extends Persona
         return $this;
     }
 
+
+    public function getRoles()
+    {
+        $roles = [];
+        $roles[] = 'ROLE_USER';
+        if ($this->isAdmin()) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+        if ($this->isDocente()) {
+            $roles[] = 'ROLE_DOCENTE';
+        }
+        if ($this->isDocente()) {
+            $roles[] = 'ROLE_CONSERJE';
+        }
+        return array_unique($roles);
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Don't do anything
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUserName();
+    }
 
 }

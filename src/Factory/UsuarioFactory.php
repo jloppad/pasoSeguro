@@ -47,13 +47,13 @@ final class UsuarioFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'apellidos' => self::faker()->text(255),
-            'esAdmin' => self::faker()->boolean(),
-            'esConserje' => self::faker()->boolean(),
-            'esDocente' => self::faker()->boolean(),
-            'nombre' => self::faker()->text(255),
-            'pass' => self::faker()->text(255),
-            'username' => self::faker()->text(255),
+            'nombre' => self::faker()->firstName(),
+            'apellidos' => self::faker()->lastName() . " " . self::faker()->lastName(),
+            'username' => self::faker()->userName(),
+            'password' => self::faker()->password(),
+            'docente' => false,
+            'admin' => false,
+            'conserje' => false,
         ];
     }
 
