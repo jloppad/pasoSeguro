@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
 class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Column(length: 15, unique: true)]
+    #[ORM\Column(unique: true)]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255)]

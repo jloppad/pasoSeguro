@@ -49,7 +49,7 @@ final class UsuarioFactory extends ModelFactory
         return [
             'nombre' => self::faker()->firstName(),
             'apellidos' => self::faker()->lastName() . " " . self::faker()->lastName(),
-            'username' => self::faker()->userName(),
+            'username' => self::faker()->unique()->userName(),
             'password' => self::faker()->password(),
             'docente' => false,
             'admin' => false,

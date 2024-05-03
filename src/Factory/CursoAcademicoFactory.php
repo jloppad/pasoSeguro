@@ -29,6 +29,7 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class CursoAcademicoFactory extends ModelFactory
 {
+    private static $count = 0;
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -46,12 +47,18 @@ final class CursoAcademicoFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+        $inicio = 2024 - self::$count;
+        $final = 2025 - self::$count;
+
+        self::$count++;
+
         return [
-            'descripcion' => self::faker()->text(255),
-            'fechaFinal' => self::faker()->dateTime(),
-            'fechaInicio' => self::faker()->dateTime(),
+            'descripcion' => "$inicio/$final",
+            'fechaInicio' => self::faker()->dateTimeInInterval("15 September $inicio"),
+            'fechaFinal' => self::faker()->dateTimeInInterval("20 June $final"),
         ];
     }
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
