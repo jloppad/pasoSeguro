@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Estudiante;
+use App\Provider\NIEProvider;
 use App\Repository\EstudianteRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -47,10 +48,10 @@ final class EstudianteFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'apellidos' => self::faker()->text(255),
-            'foto' => self::faker()->text(),
-            'nie' => self::faker()->randomNumber(),
-            'nombre' => self::faker()->text(255),
+            'nombre' => self::faker()->firstName(),
+            'apellidos' => self::faker()->lastName() . " " . self::faker()->lastName(),
+            'foto' => self::faker()->image(),
+            'nie' => self::faker()->numberBetween(100000, 9999999),
         ];
     }
 

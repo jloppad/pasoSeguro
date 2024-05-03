@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\EstudianteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EstudianteRepository::class)]
@@ -13,8 +12,12 @@ class Estudiante extends Persona
 {
     #[ORM\Column]
     private ?int $nie = null;
+    // Entre 6 o 7 numeros
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(type: 'blob')]
+    /**
+     * @var resource|null $foto
+     */
     private $foto = null;
 
     #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'estudiantes')]
@@ -46,7 +49,7 @@ class Estudiante extends Persona
         return $this->foto;
     }
 
-    public function setFoto($foto): static
+    public function setFoto($foto): Estudiante
     {
         $this->foto = $foto;
 
