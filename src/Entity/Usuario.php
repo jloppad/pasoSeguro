@@ -27,7 +27,7 @@ class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUse
     #[ORM\Column]
     private ?bool $admin = null;
 
-    #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'usuarios')]
+    #[ORM\ManyToMany(targetEntity: Grupo::class, mappedBy: 'docentes')]
     private Collection $grupos;
 
     #[ORM\OneToMany(targetEntity: Registro::class, mappedBy: 'responsable')]

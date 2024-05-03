@@ -22,14 +22,14 @@ class Grupo
     private ?CursoAcademico $cursoAcademico = null;
 
     #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: 'grupos')]
-    private Collection $usuarios;
+    private Collection $docentes;
 
     #[ORM\ManyToMany(targetEntity: Estudiante::class, inversedBy: 'grupos')]
     private Collection $estudiantes;
 
     public function __construct()
     {
-        $this->usuarios = new ArrayCollection();
+        $this->docentes = new ArrayCollection();
         $this->estudiantes = new ArrayCollection();
     }
 
@@ -70,24 +70,24 @@ class Grupo
     /**
      * @return Collection<int, Usuario>
      */
-    public function getUsuarios(): Collection
+    public function getDocentes(): Collection
     {
-        return $this->usuarios;
+        return $this->docentes;
     }
 
-    public function addUsuario(Usuario $usuario): static
+    public function addDocente(Usuario $usuario): static
     {
-        if (!$this->usuarios->contains($usuario)) {
-            $this->usuarios->add($usuario);
+        if (!$this->docentes->contains($usuario)) {
+            $this->docentes->add($usuario);
             $usuario->addGrupo($this);
         }
 
         return $this;
     }
 
-    public function removeUsuario(Usuario $usuario): static
+    public function removeDocente(Usuario $usuario): static
     {
-        if ($this->usuarios->removeElement($usuario)) {
+        if ($this->docentes->removeElement($usuario)) {
             $usuario->removeGrupo($this);
         }
 
