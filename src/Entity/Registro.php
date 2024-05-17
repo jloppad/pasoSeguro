@@ -28,10 +28,10 @@ class Registro
     private ?Estudiante $estudiante = null;
 
     #[ORM\ManyToOne(inversedBy: 'registros')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Llave $llave = null;
 
-    #[ORM\ManyToMany(targetEntity: Motivo::class, mappedBy: 'registros')]
+    #[ORM\ManyToMany(targetEntity: Motivo::class, inversedBy: 'registros')]
     private Collection $motivos;
 
     public function __construct()

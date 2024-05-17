@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
         $cursosAcademicos = [];
         $motivos = ['Baño','Conserjeria','Despacho','Otro'];
         date_default_timezone_set('Europe/Madrid');
-        $hora = date('H:i:s');
+        $hora = new \DateTime(date('H:i:s'));
 
         for ($i = 0; $i < 2; $i++) {
             $cursosAcademicos[] = CursoAcademicoFactory::createOne();
@@ -75,16 +75,24 @@ class AppFixtures extends Fixture
             ]);
         }
 
-        RegistroFactory::createOne([
-            $minutos_aleatorios = rand(5, 30),
-            'horaSalida' => $hora,
-            'horaEntrada' => date('H:i:s', strtotime("+$minutos_aleatorios minutes", strtotime($hora))),
-            'responsable' => ,
-            'estudiante' => ,
-            'motivos' => ,
-            'llave'
-
-        ]);
+        RegistroFactory::createMany(5, function () use ($motivos, $hora){
+            $minutos_aleatorios = rand(5, 30);
+            $numMotivos = rand(1, count($motivos));
+            $motivosAleatorios = MotivoFactory::randomRange(1, $numMotivos);
+            $horaEntrada = (clone $hora)->modify("+$minutos_aleatorios minutes");
+            return [
+                'horaSalida' => $hora,
+                'horaEntrada' => $horaEntrada,
+                'responsable' => UsuarioFactory::random(['docente' => true]),
+                'estudiante' => EstudianteFactory::random(),
+                'motivos' => $motivosAleatorios,
+                'llave' => RegistroFactory::faker()->boolean(50) ? null : LlaveFactory::createOne([
+                    'descripcion' => $motivosAleatorios[array_rand($motivosAleatorios)]->getDescripcion(),
+                    'horaDejada' => $hora,
+                    'horaDevuelta' => $horaEntrada
+                ])
+            ];
+        });
 
         $manager->flush();
     }

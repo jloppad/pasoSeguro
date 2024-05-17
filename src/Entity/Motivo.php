@@ -21,7 +21,7 @@ class Motivo
     #[ORM\Column]
     private ?int $numeroOrden = null;
 
-    #[ORM\ManyToMany(targetEntity: Registro::class, inversedBy: 'motivos')]
+    #[ORM\ManyToMany(targetEntity: Registro::class, mappedBy: 'motivos')]
     private Collection $registros;
 
     public function __construct()
