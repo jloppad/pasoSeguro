@@ -2,8 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\CursoAcademico;
-use App\Entity\Motivo;
+use App\Entity\Usuario;
 use App\Factory\CursoAcademicoFactory;
 use App\Factory\EstudianteFactory;
 use App\Factory\GrupoFactory;
@@ -11,12 +10,18 @@ use App\Factory\LlaveFactory;
 use App\Factory\MotivoFactory;
 use App\Factory\RegistroFactory;
 use App\Factory\UsuarioFactory;
-use App\Repository\UsuarioRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
 
@@ -31,17 +36,28 @@ class AppFixtures extends Fixture
 
         UsuarioFactory::createOne([
             'username' => 'chuck',
-            'password' => 'norris',
+            'password' => $this->passwordHasher->hashPassword(
+                new Usuario(),
+                'norris'
+            ),
             'admin' => true
         ]);
         UsuarioFactory::createOne([
             'username' => 'pepe',
-            'password' => 'madrid',
+            'password' => $this->passwordHasher->hashPassword(
+                new Usuario(),
+                'madrid'
+            ),
             'conserje' => true
         ]);
 
+        $docentePass = $this->passwordHasher->hashPassword(
+            new Usuario(),
+            'docente'
+        );
+
         foreach ($cursosAcademicos as $cursoAcademico) {
-            GrupoFactory::createMany(8, function () use ($cursoAcademico) {
+            GrupoFactory::createMany(8, function () use ($cursoAcademico, $docentePass) {
                 static $letra = 'A';
                 static $count = 1;
 
@@ -59,9 +75,10 @@ class AppFixtures extends Fixture
                     'descripcion' => $oldCount . "ºESO " . $oldLetra,
                     'cursoAcademico' => $cursoAcademico,
                     'estudiantes' => EstudianteFactory::createMany(5),
-                    'docentes' => UsuarioFactory::createMany(2, function (){
+                    'docentes' => UsuarioFactory::createMany(2, function () use ($docentePass) {
                         return [
-                            'docente' => true
+                            'docente' => true,
+                            'password' => $docentePass
                         ];
                     })
                 ];

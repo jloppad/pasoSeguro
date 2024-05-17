@@ -153,7 +153,7 @@ class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUse
     }
 
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [];
         $roles[] = 'ROLE_USER';
@@ -163,7 +163,7 @@ class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUse
         if ($this->isDocente()) {
             $roles[] = 'ROLE_DOCENTE';
         }
-        if ($this->isDocente()) {
+        if ($this->isConserje()) {
             $roles[] = 'ROLE_CONSERJE';
         }
         return array_unique($roles);

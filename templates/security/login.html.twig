@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Inicio de Sesion</h1>
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+        <form method="post" class="form">
+            <input type="text" name="_username" value="{{ last_username }}" placeholder="Introduce el usuario" class="form-control" {% if not last_username %}autofocus{% endif %}>
+            <input type="password" name="_password" placeholder="Introduce la contraseña" class="form-control" {% if last_username %}autofocus{% endif %}>
+            <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+        </form>
+    </div>
+{% endblock %}
