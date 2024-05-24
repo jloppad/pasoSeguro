@@ -1,0 +1,183 @@
+@font-face{
+    font-family: 'Poppins-Regular';
+    src: url('../fuentes/Poppins/Poppins-Regular.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    font-family: "Poppins-Regular", sans-serif;
+    background-color: #F9F5EE;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+button {
+    background-color: #ca8a50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #bc712d;
+}
+
+/* Estilos para el login */
+
+.navbar {
+    display: flex;
+    background-color: #461804;
+    color: #fefbec;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-brand {
+    text-decoration: none;
+    color: #fefbec;
+}
+
+/* Estilos para el login */
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #461804;
+    justify-content: center;
+}
+
+.logo {
+    margin-top: -5em;
+    width: 12em;
+    height: auto;
+    margin-bottom: 2em;
+}
+
+.login-container {
+    padding: 3em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    background-color: #F9F5EE;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 60%;
+    padding: 15px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 7%;
+}
+
+.login-container input[type="text"] {
+    margin-left: 15.5%;
+    margin-top: 2em;
+}
+
+.login-container button{
+    margin-top: 1em;
+    -webkit-box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
+    border-radius: 5px;
+}
+
+/* Estilos para la selección de curso */
+.selection-container {
+    background-color: #FF7F27;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.selection-container select {
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+/* Estilos para la lista de cursos */
+.course-list-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #FFEBD3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.course-list {
+    background-color: #FFD480;
+    padding: 10px;
+    border-radius: 5px;
+    width: 30%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.course-list h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.course-list input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Estilos para la lista de registros */
+.record-list-container {
+    background-color: #F9F5EE;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.record-list-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.record-list-container th,
+.record-list-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.record-list-container th {
+    background-color: #FF7F27;
+    color: white;
+}
+
+.record-list-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.record-list-container tr:hover {
+    background-color: #ddd;
+}
