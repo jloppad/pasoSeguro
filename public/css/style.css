@@ -57,6 +57,7 @@ button:hover {
     min-height: 100vh;
     background-color: #461804;
     justify-content: center;
+    align-items: center;
 }
 
 .logo {
@@ -88,21 +89,44 @@ button:hover {
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-left: 7%;
+    margin-left: 15.5%;
 }
 
 .login-container input[type="text"] {
-    margin-left: 15.5%;
     margin-top: 2em;
 }
 
-.login-container button{
+.login-container button {
     margin-top: 1em;
     -webkit-box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
     -moz-box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
     box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.75);
     border-radius: 5px;
 }
+
+@media (max-width: 500px) {
+
+    .login-container {
+        max-width: 200px;
+        line-height: 2em;
+    }
+
+    .logo {
+        margin-top: 0;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 80%;
+        margin: 0;
+    }
+
+    .login-container input[type="text"] {
+        margin-top: 2em;
+    }
+
+}
+
 
 /* Estilos para la selección de curso */
 .selection-container {
