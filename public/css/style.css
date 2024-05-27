@@ -127,6 +127,20 @@ button:hover {
 
 }
 
+/* Estilos para la alerta */
+.alert {
+    padding: 1em;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
 
 /* Estilos para la selección de curso */
 .selection-container {

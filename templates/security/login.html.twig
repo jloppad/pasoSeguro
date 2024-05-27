@@ -2,11 +2,11 @@
 {% block header %}{% endblock %}
 {% block body %}
     <div class="container">
-        {% if error %}
-            <div class="alert alert-danger alert-dismissible">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
             </div>
-        {% endif %}
+        {% endfor %}
         <img src="{{ asset('img/logo_recortado.png') }}" alt="logo" class="logo">
         <div class="login-container">
             <h1>Inicio de Sesión</h1>

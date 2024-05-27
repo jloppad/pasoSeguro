@@ -14,6 +14,9 @@ class SecurityController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $userName = $authenticationUtils->getLastUsername();
+        if ($error) {
+            $this->addFlash('error', 'Credenciales inválidas.');
+        }
         return $this->render('security/login.html.twig', [
             'error' => $error,
             'last_username' => $userName
