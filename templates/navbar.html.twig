@@ -1,20 +1,30 @@
-{% set current_path = app.request.get('_route')|split('_') %}
+{% set current_path = app.request.get('_route') %}
 <nav class="navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand" href=""><i class="fa fa-money-bills"></i> Paso Seguro</a>
-        <div class="col-auto" id="navbarNav">
-            {% if app.user %}
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ current_path[0] == 'principal' ? 'active" aria-current="page' }} text-white">
-                            <i class="ti ti-user-filled"></i>Conectado como {{ app.user.userName }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ path('app_logout') }}" class="btn btn-secondary">Cerrar Sesión <i class="ti ti-user-off"></i></a>
-                    </li>
-                </ul>
-            {% endif %}
-        </div>
+    <div class="left">
+        {% if is_granted('ROLE_CONSERJE') %}
+            <a href="{{ path('exterior') }}" class="{{ current_path == 'exterior' ? 'active' : '' }}">Listado Exterior</a>
+        {% endif %}
+        {% if is_granted('ROLE_DOCENTE') %}
+            <a href="{{ path('curso') }}" class="{{ current_path == 'curso' ? 'active' : '' }}">Listado de Curso</a>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('registro') }}" class="{{ current_path == 'registro' ? 'active' : '' }}">Registro</a>
+        {% endif %}
     </div>
-
+    <div class="middle">
+        <img src="{{ asset('/img/logo_recortado.png') }}" alt="logo">
+        <p>Paso Seguro</p>
+    </div>
+    <div class="right">
+        <ul>
+            {% if app.user %}
+                <li>
+                    <p><i class="fa-solid fa-user-tie"></i>  Conectado como {{ app.user.userName }}</p>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}"> <i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesión</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>

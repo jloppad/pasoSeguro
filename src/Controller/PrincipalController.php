@@ -13,17 +13,39 @@ class PrincipalController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(): Response
     {
-        $plantilla = 'listados/exterior.html.twig';
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('registro');
+        }
 
         if ($this->isGranted('ROLE_DOCENTE')) {
-            $plantilla = 'listados/curso.html.twig';
+            return $this->redirectToRoute('curso');
         }
 
-        if ($this->isGranted('ROLE_ADMIN')) {
-            $plantilla = 'listados/registro.html.twig';
+        if ($this->isGranted('ROLE_CONSERJE')) {
+            return $this->redirectToRoute('exterior');
         }
 
-        return $this->render($plantilla);
+        throw $this->createAccessDeniedException('No tienes permisos para acceder a esta página.');
     }
 
+    #[IsGranted('ROLE_DOCENTE')]
+    #[Route('/curso', name: 'curso')]
+    public function curso(): Response
+    {
+        return $this->render("listados/curso.html.twig");
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/registro', name: 'registro')]
+    public function registro(): Response
+    {
+        return $this->render("listados/registro.html.twig");
+    }
+
+    #[IsGranted('ROLE_CONSERJE')]
+    #[Route('/exterior', name: 'exterior')]
+    public function exterior(): Response
+    {
+        return $this->render("listados/exterior.html.twig");
+    }
 }

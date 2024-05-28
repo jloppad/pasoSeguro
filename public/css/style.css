@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face{
+    font-family: 'Poppins-Tittle';
+    src: url('../fuentes/Poppins/Poppins-Medium.ttf');
+    font-weight: 100;
+    font-style: normal;
+}
+
 body {
     font-family: "Poppins-Regular", sans-serif;
     background-color: #F9F5EE;
@@ -35,21 +42,70 @@ button:hover {
     background-color: #bc712d;
 }
 
-/* Estilos para el login */
-
+/* Estilos para el navbar */
 .navbar {
     display: flex;
     background-color: #461804;
     color: #fefbec;
-    height: 7vh;
-    justify-content: center;
+    height: 8vh;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.navbar i {
+    font-size: 1em;
+}
+
+.navbar .left,
+.navbar .right {
+    display: flex;
     align-items: center;
 }
 
-.navbar-brand {
-    text-decoration: none;
-    color: #fefbec;
+.navbar .middle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
+
+.navbar .middle p {
+    font-family: "Poppins-Tittle", sans-serif;
+    font-size: 1.5em;
+}
+
+.navbar .middle img {
+    width: 3em;
+    margin-right: 1em;
+}
+
+.navbar .left a,
+.navbar .right ul li a {
+    color: #fefbec;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.navbar .left a.active {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.navbar .right ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .right ul li {
+    margin-left: 1rem;
+}
+
 
 /* Estilos para el login */
 .container {
@@ -142,80 +198,5 @@ button:hover {
     border-color: #f5c6cb;
 }
 
-/* Estilos para la selección de curso */
-.selection-container {
-    background-color: #FF7F27;
-    color: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-.selection-container select {
-    padding: 10px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-}
 
-/* Estilos para la lista de cursos */
-.course-list-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: #FFEBD3;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.course-list {
-    background-color: #FFD480;
-    padding: 10px;
-    border-radius: 5px;
-    width: 30%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.course-list h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.course-list input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-/* Estilos para la lista de registros */
-.record-list-container {
-    background-color: #F9F5EE;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
-}
-
-.record-list-container table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.record-list-container th,
-.record-list-container td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.record-list-container th {
-    background-color: #FF7F27;
-    color: white;
-}
-
-.record-list-container tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.record-list-container tr:hover {
-    background-color: #ddd;
-}
