@@ -1,22 +1,30 @@
 {% set current_path = app.request.get('_route') %}
 <nav class="navbar">
     <div class="left">
-        {% if is_granted('ROLE_CONSERJE') %}
-            <a href="{{ path('exterior') }}" class="{{ current_path == 'exterior' ? 'active' : '' }}">Listado Exterior</a>
-        {% endif %}
-        {% if is_granted('ROLE_DOCENTE') %}
-            <a href="{{ path('curso') }}" class="{{ current_path == 'curso' ? 'active' : '' }}">Listado de Curso</a>
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('registro') }}" class="{{ current_path == 'registro' ? 'active' : '' }}">Registro</a>
-        {% endif %}
+        <div class="menu-icon" onclick="toggleLeftMenu()">
+            <i class="fas fa-bars menu-open"></i>
+        </div>
+        <div class="menu-items">
+            {% if is_granted('ROLE_CONSERJE') %}
+                <a href="{{ path('exterior') }}" class="{{ current_path == 'exterior' ? 'active' : '' }}">Listado Exterior</a>
+            {% endif %}
+            {% if is_granted('ROLE_DOCENTE') %}
+                <a href="{{ path('curso') }}" class="{{ current_path == 'curso' ? 'active' : '' }}">Listado de Curso</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('registro') }}" class="{{ current_path == 'registro' ? 'active' : '' }}">Registro</a>
+            {% endif %}
+        </div>
     </div>
     <div class="middle">
         <img src="{{ asset('/img/logo_recortado.png') }}" alt="logo">
         <p>Paso Seguro</p>
     </div>
     <div class="right">
-        <ul>
+        <div class="menu-icon" onclick="toggleRightMenu()">
+            <i class="fas fa-user menu-open"></i>
+        </div>
+        <ul class="menu-items">
             {% if app.user %}
                 <li>
                     <p><i class="fa-solid fa-user-tie"></i>  Conectado como {{ app.user.userName }}</p>
