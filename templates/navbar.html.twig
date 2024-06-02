@@ -1,4 +1,7 @@
 {% set current_path = app.request.get('_route') %}
+{% block javascripts %}
+    <script src="{{ asset('js/menuHamburguesa.js') }}"></script>
+{% endblock %}
 <nav class="navbar">
     <div class="left">
         <div class="menu-icon" id="left-menu-icon">
