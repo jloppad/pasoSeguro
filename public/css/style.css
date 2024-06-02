@@ -263,6 +263,12 @@ button:hover {
     padding: 0;
 }
 
+.left .menu-icon,
+.right .menu-icon{
+    align-items: center;
+    font-size: 1.5em;
+}
+
 /* Estilos para el icono de hamburguesa */
 .menu-icon {
     width: 30px;

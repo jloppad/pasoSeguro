@@ -1,8 +1,8 @@
 {% set current_path = app.request.get('_route') %}
 <nav class="navbar">
     <div class="left">
-        <div class="menu-icon" onclick="toggleLeftMenu()">
-            <i class="fas fa-bars menu-open"></i>
+        <div class="menu-icon" id="left-menu-icon">
+            <i class="fas fa-bars menu-open" id="left-menu-icon-i"></i>
         </div>
         <div class="menu-items">
             {% if is_granted('ROLE_CONSERJE') %}
@@ -21,16 +21,16 @@
         <p>Paso Seguro</p>
     </div>
     <div class="right">
-        <div class="menu-icon" onclick="toggleRightMenu()">
-            <i class="fas fa-user menu-open"></i>
+        <div class="menu-icon" id="right-menu-icon">
+            <i class="fas fa-user menu-open" id="right-menu-icon-i"></i>
         </div>
         <ul class="menu-items">
             {% if app.user %}
                 <li>
-                    <p><i class="fa-solid fa-user-tie"></i>  Conectado como {{ app.user.userName }}</p>
+                    <p><i class="fa-solid fa-user-tie"></i> Conectado como {{ app.user.userName }}</p>
                 </li>
                 <li>
-                    <a href="{{ path('app_logout') }}"> <i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesión</a>
+                    <a href="{{ path('app_logout') }}"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
                 </li>
             {% endif %}
         </ul>
