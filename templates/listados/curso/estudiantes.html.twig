@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Estudiantes del Curso{% endblock %}
+
+{% block body %}
+    <h1>Estudiantes del Grupo</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Foto</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.id }}</td>
+                <td>{{ estudiante.nombre }}</td>
+                <td>{{ estudiante.apellidos }}</td>
+                <td>
+                    {% if estudiante.foto %}
+                        <img src="data:image/jpeg;base64,{{ estudiante.foto|raw }}" alt="{{ estudiante.nie }}">
+                    {% else %}
+                        No disponible
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
