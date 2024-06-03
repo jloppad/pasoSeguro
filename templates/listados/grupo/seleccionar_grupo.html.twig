@@ -1,0 +1,42 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div id="popup" class="popup">
+        <h2>Seleccionar Grupo</h2>
+        <form action="{{ path('redirigir_grupo') }}" method="post">
+            <label for="grupo">Grupo:</label>
+            <select name="grupo" id="grupo">
+                {% for grupo in grupos %}
+                    <option value="{{ grupo.id }}">{{ grupo.descripcion }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Seleccionar</button>
+        </form>
+    </div>
+
+    <style>
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        .popup form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup form label, .popup form select, .popup form button {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

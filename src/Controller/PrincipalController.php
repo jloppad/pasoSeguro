@@ -18,7 +18,7 @@ class PrincipalController extends AbstractController
         }
 
         if ($this->isGranted('ROLE_DOCENTE')) {
-            return $this->redirectToRoute('curso');
+            return $this->redirectToRoute('seleccionar_grupo');
         }
 
         if ($this->isGranted('ROLE_CONSERJE')) {
@@ -29,10 +29,10 @@ class PrincipalController extends AbstractController
     }
 
     #[IsGranted('ROLE_DOCENTE')]
-    #[Route('/curso', name: 'curso')]
-    public function curso(): Response
+    #[Route('/grupo', name: 'grupo')]
+    public function grupo(): Response
     {
-        return $this->render("listados/curso.html.twig");
+        return $this->render("listados/grupo/seleccionar_grupo.html.twig");
     }
 
     #[IsGranted('ROLE_ADMIN')]

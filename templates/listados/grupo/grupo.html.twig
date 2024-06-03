@@ -1,0 +1,17 @@
+{% extends '../../layout.html.twig' %}
+
+{% block body %}
+    <h1>Listado de Cursos</h1>
+
+    <button id="selectGrupoBtn">Seleccionar Grupo</button>
+
+    <div id="popupContainer" style="display:none;">
+        {% include 'listados/grupo/seleccionar_grupo.html.twig' %}
+    </div>
+
+    <script>
+        document.getElementById('selectGrupoBtn').addEventListener('click', function() {
+            document.getElementById('popupContainer').style.display = 'block';
+        });
+    </script>
+{% endblock %}

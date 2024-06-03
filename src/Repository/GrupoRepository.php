@@ -21,6 +21,16 @@ class GrupoRepository extends ServiceEntityRepository
         parent::__construct($registry, Grupo::class);
     }
 
+    public function findByDocente($docenteId)
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin('g.docentes', 'd')
+            ->where('d.id = :docenteId')
+            ->setParameter('docenteId', $docenteId)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findEstudiantesByGrupo($grupoId)
     {
         $em = $this->getEntityManager();
