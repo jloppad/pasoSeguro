@@ -30,18 +30,11 @@ class AppFixtures extends Fixture
         date_default_timezone_set('Europe/Madrid');
         $hora = new \DateTime(date('H:i:s'));
 
-        for ($i = 0; $i < 2; $i++) {
-            $cursosAcademicos[] = CursoAcademicoFactory::createOne();
-        }
+        $docentePass = $this->passwordHasher->hashPassword(
+            new Usuario(),
+            'docente'
+        );
 
-        UsuarioFactory::createOne([
-            'username' => 'chuck',
-            'password' => $this->passwordHasher->hashPassword(
-                new Usuario(),
-                'norris'
-            ),
-            'admin' => true
-        ]);
         UsuarioFactory::createOne([
             'username' => 'pepe',
             'password' => $this->passwordHasher->hashPassword(
@@ -51,10 +44,18 @@ class AppFixtures extends Fixture
             'conserje' => true
         ]);
 
-        $docentePass = $this->passwordHasher->hashPassword(
-            new Usuario(),
-            'docente'
-        );
+        UsuarioFactory::createOne([
+            'username' => 'chuck',
+            'password' => $this->passwordHasher->hashPassword(
+                new Usuario(),
+                'norris'
+            ),
+            'admin' => true
+        ]);
+
+        for ($i = 0; $i < 2; $i++) {
+            $cursosAcademicos[] = CursoAcademicoFactory::createOne();
+        }
 
         foreach ($cursosAcademicos as $cursoAcademico) {
             GrupoFactory::createMany(8, function () use ($cursoAcademico, $docentePass) {
