@@ -26,7 +26,7 @@ class GrupoController extends AbstractController
         $user = $this->getUser();
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            $grupos = $grupoRepository->findAll();
+            $grupos = $grupoRepository->findByCurrentYear();
         } else {
             $grupos = $grupoRepository->findByDocente($user->getId());
         }

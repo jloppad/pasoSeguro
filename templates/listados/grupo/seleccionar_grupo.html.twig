@@ -2,17 +2,22 @@
 
 {% block body %}
     <div id="popup" class="popup">
-        <h2>Seleccionar Grupo</h2>
-        <form action="{{ path('redirigir_grupo') }}" method="post">
-            <label for="grupo">Grupo:</label>
-            <select name="grupo" id="grupo">
-                {% for grupo in grupos %}
-                    <option value="{{ grupo.id }}">{{ grupo.descripcion }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Seleccionar</button>
-        </form>
+        {% if grupos|length > 0 %}
+            <h2>Seleccionar Grupo</h2>
+            <form action="{{ path('redirigir_grupo') }}" method="post">
+                <label for="grupo">Grupo:</label>
+                <select name="grupo" id="grupo">
+                    {% for grupo in grupos %}
+                        <option value="{{ grupo.id }}">{{ grupo.descripcion }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Seleccionar</button>
+            </form>
+        {% else %}
+            <p>Ningún grupo asignado en el curso académico actual</p>
+        {% endif %}
     </div>
+
 
     <style>
         .popup {
