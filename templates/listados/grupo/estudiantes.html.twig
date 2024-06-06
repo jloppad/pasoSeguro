@@ -3,19 +3,21 @@
     <link rel="stylesheet" href="{{ asset('css/estudiantes.css') }}">
 {% endblock %}
 {% block body %}
-    <a href="{{ path('seleccionar_grupo') }}">Cambiar de Grupo</a>
-    <h1>Estudiantes de {{ grupo }}</h1>
-    <div class="cards-container">
-        {% for estudiante in estudiantes %}
-            <div class="card inactive-card">
-                <img src="{{ asset('img/foto_default.jpeg') }}" alt="foto de {{ estudiante.apellidos }}">
-                <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
-                <ul>
-                    {% for motivo in motivos %}
-                        <li><input type="checkbox"> {{ motivo }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+    <div class="container">
+        <a href="{{ path('seleccionar_grupo') }}">Cambiar de Grupo</a>
+        <h1>Estudiantes de {{ grupo }}</h1>
+        <div class="cards-container">
+            {% for estudiante in estudiantes %}
+                <div class="card inactive-card">
+                    <img src="{{ asset('img/foto_default.jpeg') }}" alt="foto de {{ estudiante.apellidos }}">
+                    <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+                    <ul>
+                        {% for motivo in motivos %}
+                            <li><input type="checkbox"> {{ motivo }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
