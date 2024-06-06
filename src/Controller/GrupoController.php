@@ -3,6 +3,7 @@
 // src/Controller/GrupoController.php
 namespace App\Controller;
 
+use App\Repository\MotivoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,12 +39,18 @@ class GrupoController extends AbstractController
 
 
     #[Route('/grupo/{id}/estudiantes', name: 'grupo_estudiantes')]
-    public function estudiantes($id, GrupoRepository $grupoRepository): Response
+    public function estudiantes($id, GrupoRepository $grupoRepository, MotivoRepository $motivoRepository): Response
     {
         $estudiantes = $grupoRepository->findEstudiantesByGrupo($id);
 
+        $motivos = $motivoRepository->findAll();
+
+        $grupo = $grupoRepository->find($id);
+
         return $this->render('listados/grupo/estudiantes.html.twig', [
             'estudiantes' => $estudiantes,
+            'motivos' => $motivos,
+            'grupo' => $grupo
         ]);
     }
 

@@ -1,33 +1,21 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/estudiantes.css') }}">
+{% endblock %}
 {% block body %}
     <a href="{{ path('seleccionar_grupo') }}">Cambiar de Grupo</a>
-    <h1>Estudiantes del Grupo</h1>
-
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Foto</th>
-        </tr>
-        </thead>
-        <tbody>
+    <h1>Estudiantes de {{ grupo }}</h1>
+    <div class="cards-container">
         {% for estudiante in estudiantes %}
-            <tr>
-                <td>{{ estudiante.id }}</td>
-                <td>{{ estudiante.nombre }}</td>
-                <td>{{ estudiante.apellidos }}</td>
-                <td>
-                    {% if estudiante.foto %}
-                        <img src="data:image/jpeg;base64,{{ estudiante.foto|raw }}" alt="{{ estudiante.nie }}">
-                    {% else %}
-                        No disponible
-                    {% endif %}
-                </td>
-            </tr>
+            <div class="card inactive-card">
+                <img src="{{ asset('img/foto_default.jpeg') }}" alt="foto de {{ estudiante.apellidos }}">
+                <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+                <ul>
+                    {% for motivo in motivos %}
+                        <li><input type="checkbox"> {{ motivo }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}
