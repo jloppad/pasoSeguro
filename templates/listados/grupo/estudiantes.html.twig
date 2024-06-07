@@ -2,9 +2,13 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/estudiantes.css') }}">
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/cambiarColorCard.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <div class="container">
-        <a href="{{ path('seleccionar_grupo') }}">Cambiar de Grupo</a>
+        <a href="{{ path('seleccionar_grupo') }}" class="btn-change-group">Cambiar de Grupo</a>
         <h1>Estudiantes de {{ grupo }}</h1>
         <div class="cards-container">
             {% for estudiante in estudiantes %}
