@@ -4,6 +4,7 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/cambiarColorCard.js') }}"></script>
+    <script src="{{ asset('js/crearRegistro.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -12,16 +13,18 @@
         <h1>Estudiantes de {{ grupo }}</h1>
         <div class="cards-container">
             {% for estudiante in estudiantes %}
-                <div class="card inactive-card">
+                <div class="card inactive-card" data-student-id="{{ estudiante.id }}">
                     <img src="{{ asset('img/foto_default.jpeg') }}" alt="foto de {{ estudiante.apellidos }}">
                     <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
                     <ul>
                         {% for motivo in motivos %}
-                            <li><input type="checkbox"> {{ motivo }}</li>
+                            <li><input type="checkbox" value="{{ motivo }}"> {{ motivo }}</li>
                         {% endfor %}
                     </ul>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
 {% endblock %}
+
