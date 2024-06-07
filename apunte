@@ -1,0 +1,174 @@
+Para hacer que el cambio en la base de datos al marcar un checkbox sea independiente del cambio de color de la tarjeta, puedes estructurar el JavaScript y el controlador Symfony de manera que el cambio de color ocurra en el cliente sin depender de la respuesta del servidor, y el servidor maneje la actualización de la base de datos de forma asíncrona.
+
+Aquí están los pasos detallados:
+
+### 1. JavaScript para Capturar el Evento y Enviar los Datos
+
+El JavaScript se encargará de capturar el evento `change` de los checkboxes y enviará una solicitud AJAX al servidor para guardar el registro, y el cambio de color se realizará inmediatamente.
+
+#### Twig (Agrega al final del archivo)
+
+```twig
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Seleccionar todos los checkboxes dentro de las tarjetas
+            const checkboxes = document.querySelectorAll(".card input[type='checkbox']");
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener("change", function() {
+                    const card = this.closest(".card"); // Encontrar la tarjeta padre más cercana
+                    const estudianteId = card.dataset.estudianteId; // Obtener el ID del estudiante
+                    const motivo = this.nextSibling.textContent.trim(); // Obtener el motivo del checkbox
+                    const isChecked = this.checked;
+
+                    // Cambiar el color de la tarjeta inmediatamente
+                    const checkedCheckboxes = card.querySelectorAll("input[type='checkbox']:checked");
+                    if (checkedCheckboxes.length > 0) {
+                        card.classList.add("active-card");
+                        card.classList.remove("inactive-card");
+                    } else {
+                        card.classList.add("inactive-card");
+                        card.classList.remove("active-card");
+                    }
+
+                    // Enviar la solicitud AJAX
+                    fetch('{{ path("registro_motivo") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            estudianteId: estudianteId,
+                            motivo: motivo,
+                            isChecked: isChecked
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Registro actualizado');
+                        } else {
+                            console.error('Error al actualizar el registro');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
+```
+
+### 2. Controlador Symfony para Procesar la Solicitud
+
+El controlador manejará la solicitud AJAX y actualizará la base de datos según el estado del checkbox.
+
+#### Controlador Symfony
+
+```php
+// src/Controller/RegistroController.php
+namespace App\Controller;
+
+use App\Entity\Estudiante;
+use App\Entity\Motivo;
+use App\Entity\Registro;
+use App\Repository\RegistroRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
+class RegistroController extends AbstractController
+{
+    #[Route('/registro/motivo', name: 'registro_motivo', methods: ['POST'])]
+    public function registrarMotivo(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        RegistroRepository $registroRepository
+    ): JsonResponse {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['estudianteId'], $data['motivo'], $data['isChecked'])) {
+            return new JsonResponse(['success' => false, 'message' => 'Datos incompletos'], 400);
+        }
+
+        $estudiante = $entityManager->getRepository(Estudiante::class)->find($data['estudianteId']);
+        $motivo = $entityManager->getRepository(Motivo::class)->findOneBy(['nombre' => $data['motivo']]);
+
+        if (!$estudiante || !$motivo) {
+            return new JsonResponse(['success' => false, 'message' => 'Estudiante o motivo no encontrado'], 404);
+        }
+
+        if ($data['isChecked']) {
+            // Crear nuevo registro si no existe uno similar
+            $registro = new Registro();
+            $registro->setEstudiante($estudiante);
+            $registro->setHoraSalida(new \DateTime());
+            $registro->addMotivo($motivo);
+            $entityManager->persist($registro);
+        } else {
+            // Encontrar y eliminar el registro si el checkbox se desmarca
+            $registros = $registroRepository->findBy(['estudiante' => $estudiante]);
+
+            foreach ($registros as $registro) {
+                if ($registro->getMotivos()->contains($motivo)) {
+                    $registro->removeMotivo($motivo);
+                    if ($registro->getMotivos()->isEmpty()) {
+                        $entityManager->remove($registro);
+                    }
+                }
+            }
+        }
+
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => true]);
+    }
+}
+```
+
+### 3. Modificar la Plantilla Twig para Incluir `data-estudiante-id`
+
+Agrega un atributo `data-estudiante-id` a la tarjeta `.card` para que el JavaScript pueda capturar el ID del estudiante.
+
+#### Twig (Modificado)
+
+```twig
+{% block body %}
+    <div class="container">
+        <a href="{{ path('seleccionar_grupo') }}" class="btn-change-group">Cambiar de Grupo</a>
+        <h1>Estudiantes de {{ grupo }}</h1>
+        <div class="cards-container">
+            {% for estudiante in estudiantes %}
+                <div class="card inactive-card" data-estudiante-id="{{ estudiante.id }}">
+                    <img src="{{ asset('img/foto_default.jpeg') }}" alt="foto de {{ estudiante.apellidos }}">
+                    <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+                    <ul>
+                        {% for motivo in motivos %}
+                            <li><input type="checkbox"> {{ motivo.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+```
+
+### Explicación:
+
+1. **JavaScript**:
+   - El JavaScript escucha los cambios en los checkboxes, cambia el color de la tarjeta inmediatamente y envía una solicitud AJAX al servidor para actualizar la base de datos.
+
+2. **Controlador Symfony**:
+   - El controlador maneja la solicitud AJAX, actualiza la base de datos creando o eliminando registros según el estado del checkbox.
+
+3. **Plantilla Twig**:
+   - La plantilla Twig incluye `data-estudiante-id` en la tarjeta para que el JavaScript pueda enviar el ID del estudiante en la solicitud AJAX.
+
+Estos cambios permiten que el color de la tarjeta cambie inmediatamente al marcar/desmarcar un checkbox, mientras que el estado del checkbox se sincroniza con la base de datos de manera asíncrona a través de AJAX.
