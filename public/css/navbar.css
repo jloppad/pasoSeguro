@@ -89,6 +89,7 @@
     background-color: rgba(70, 24, 4, 0.91);
     border-radius: 0 0 5px 5px;
     width: 100%;
+    z-index: 999;
 }
 
 .left .menu-items a {

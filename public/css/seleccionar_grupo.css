@@ -1,0 +1,80 @@
+body {
+    background-color: #461804;
+}
+
+.popup {
+    background-color: #F9F5EE;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 25em;
+}
+
+.popup label {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.popup select {
+    width: 70%;
+    padding: 12px;
+    margin: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+}
+
+.popup button {
+    background-color: #ca8a50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+}
+
+.popup button:hover {
+    background-color: #bc712d;
+}
+
+.popup p {
+    font-size: 16px;
+    color: white;
+}
+
+.left .menu-items {
+    background-color: #F9F5EE;
+}
+
+.left .menu-items a {
+    color: black;
+}
+
+@media (max-width: 500px) {
+
+    .popup {
+        width: 15em;
+    }
+
+}
+
+@media (max-width: 1100px) {
+    .right ul.menu-items {
+        background-color: #F9F5EE;
+    }
+    .right ul.menu-items, .right ul.menu-items li a {
+        color: black;
+    }
+}

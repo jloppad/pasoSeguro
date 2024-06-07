@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/seleccionar_grupo.css') }}">
+{% endblock %}
 {% block body %}
     <div id="popup" class="popup">
         {% if grupos|length > 0 %}
@@ -16,31 +18,4 @@
             <p>Ningún grupo asignado en el curso académico actual</p>
         {% endif %}
     </div>
-
-
-    <style>
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .popup h2 {
-            margin-top: 0;
-        }
-
-        .popup form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .popup form label, .popup form select, .popup form button {
-            margin-bottom: 10px;
-        }
-    </style>
 {% endblock %}
