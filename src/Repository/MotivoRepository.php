@@ -21,28 +21,12 @@ class MotivoRepository extends ServiceEntityRepository
         parent::__construct($registry, Motivo::class);
     }
 
-//    /**
-//     * @return Motivo[] Returns an array of Motivo objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByOrder()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.numeroOrden')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Motivo
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

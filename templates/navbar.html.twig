@@ -12,7 +12,7 @@
                 <a href="{{ path('exterior') }}" class="{{ current_path == 'exterior' ? 'active' : '' }}">Listado Exterior</a>
             {% endif %}
             {% if is_granted('ROLE_DOCENTE') %}
-                <a href="{{ path('curso') }}" class="{{ current_path == 'curso' ? 'active' : '' }}">Listado de Curso</a>
+                <a href="{{ path('seleccionar_grupo') }}" class="{{ current_path == 'grupo_estudiantes' ? 'active' : '' }}">Listado de Grupo </a>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('registro') }}" class="{{ current_path == 'registro' ? 'active' : '' }}">Registro</a>
