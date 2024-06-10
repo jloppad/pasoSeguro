@@ -64,7 +64,7 @@ class RegistroController extends AbstractController
         return new JsonResponse(['success' => true]);
     }
 
-    #[Route('/registro/update_all', name: 'registro_update_all', methods: ['POST'])]
+    #[Route('/registro/update_all', name: 'registro_update_all')]
     public function updateAllRegistros(RegistroRepository $registroRepo, EntityManagerInterface $em): JsonResponse
     {
         $user = $this->getUser();

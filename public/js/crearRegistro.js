@@ -40,16 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Agregar listener para beforeunload
     window.addEventListener('beforeunload', function(event) {
-        fetch('/registro/update_all', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({})
-        });
-
+        fetch('/registro/update_all');
         // Mostramos una alerta para que el navegador espere a que se complete la solicitud
         event.returnValue = 'Se están guardando los registros. ¿Está seguro que desea salir?';
     });
