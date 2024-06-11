@@ -7,21 +7,26 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="cards-container">
-        {% for estudiante in estudiantes %}
-        <div class="card active-card" data-student-id="{{ estudiante.id }}">
-            <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ estudiante.apellidos }}">
-            <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
-
-            <label>
-                <input type="checkbox" value="{{ registro.motivo }}">
-                Llave
-            </label>
-            <p class="hora-salida"><i class="'fa-solid', 'fa-person-walking-dashed-line-arrow-right'"></i></p>
+    <div class="container">
+        <div class="cards-container">
+            {% if estudiantes is defined and estudiantes|length > 0 %}
+                {% for registro in registros %}
+                    <div class="card active-card">
+                        <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ registro.estudiante.apellidos }}">
+                        <h2>{{ registro.estudiante.nombre }} {{ registro.estudiante.apellidos }}</h2>
+                        <h3>{{ registro.curso }}</h3>
+                        <p>{{ registro.horaSalida }}</p>
+                        <label>
+                            <input type="checkbox" value="{{ registro.motivo }}">
+                            Llave
+                        </label>
+                        <p class="hora-salida"><i class="'fa-solid', 'fa-person-walking-dashed-line-arrow-right'"></i></p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No hay ningun estudiante fuera</p>
+            {% endif %}
         </div>
-        {% endfor %}
     </div>
-</div>
-<meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
+    <meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
 {% endblock %}
