@@ -1,5 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', main);
+
+function main() {
+
     document.querySelectorAll('.card input[type="checkbox"]').forEach(checkbox => {
+
         checkbox.addEventListener('change', function() {
             const card = this.closest('.card');  // Obtiene el contenedor más cercano que tiene la clase "card"
             const studentId = card.dataset.studentId;  // Obtiene el ID del estudiante de un atributo de datos del contenedor
@@ -27,21 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             })
                 .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Registro actualizado exitosamente');
-                    } else {
-                        console.error('Error al actualizar el Registro');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
         });
     });
+    update_all();
+}
 
+function update_all() {
     // Agregar listener para beforeunload
     window.addEventListener('beforeunload', function(event) {
         fetch('/registro/update_all');
         // Mostramos una alerta para que el navegador espere a que se complete la solicitud
-        event.returnValue = 'Se están guardando los registros. ¿Está seguro que desea salir?';
+        event.returnValue = 'Hay registros abiertos. ¿Está seguro que desea salir?';
     });
-});
+}
+
