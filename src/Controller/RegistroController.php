@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Registro;
 use App\Repository\EstudianteRepository;
+use App\Repository\GrupoRepository;
 use App\Repository\MotivoRepository;
 use App\Repository\RegistroRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,18 +16,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistroController extends AbstractController
 {
     #[Route('/registro/update', name: 'registro_update')]
-    public function updateRegistro(Request $request, EstudianteRepository $estudianteRepository, MotivoRepository $motivoRepository, RegistroRepository $registroRepository, EntityManagerInterface $em): JsonResponse
+    public function updateRegistro(Request $request, EstudianteRepository $estudianteRepository, GrupoRepository $grupoRepository, MotivoRepository $motivoRepository, RegistroRepository $registroRepository, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $studentId = $data['studentId'];
+        $groupId = $data['groupId'];
         $motivoName = $data['motivo'];
         $isChecked = $data['isChecked'];
 
         $estudiante = $estudianteRepository->find($studentId);
+        $grupo = $grupoRepository->find($groupId);
         $motivo = $motivoRepository->findOneBy(['descripcion' => $motivoName]);
         $user = $this->getUser();
 
-        if (!$estudiante || !$motivo) {
+        if (!$estudiante || !$motivo || !$grupo) {
             return new JsonResponse(['success' => false], 400);
         }
 
@@ -37,26 +40,29 @@ class RegistroController extends AbstractController
                 $registro = new Registro();
                 $registro->setEstudiante($estudiante)
                     ->setHoraSalida(new \DateTime())
-                    ->setResponsable($user);
+                    ->setResponsable($user)
+                    ->setGrupo($grupo);
+                $registro->addMotivo($motivo);
+            } else {
+                $registro->addMotivo($motivo);
             }
-            $registro->addMotivo($motivo);
+
+            $em->persist($registro);
+            $em->flush();
         } else {
             if ($registro) {
-                $registro->removeMotivo($motivo);
-                if (isset($data['allCheckboxes'])) {
-                    $allCheckboxes = $data['allCheckboxes'];
-                    $allUnchecked = array_reduce($allCheckboxes, function($carry, $checkbox) {
-                        return $carry && !$checkbox['checked'];
-                    }, true);
-                    if ($allUnchecked) {
-                        $registro->setHoraEntrada(new \DateTime());
-                    }
+                $allCheckboxes = $data['allCheckboxes'];
+                $allUnchecked = array_reduce($allCheckboxes, function ($carry, $checkbox) {
+                    return $carry && !$checkbox['checked'];
+                }, true);
+
+                if ($allUnchecked) {
+                    $registro->setHoraEntrada(new \DateTime());
+                    $em->persist($registro);
+                    $em->flush();
                 }
             }
         }
-
-        $em->persist($registro);
-        $em->flush();
 
         $horaSalida = $registro && $registro->getHoraSalida() ? $registro->getHoraSalida()->format('H:i:s') : null;
 
@@ -79,5 +85,3 @@ class RegistroController extends AbstractController
         return new JsonResponse(['success' => true]);
     }
 }
-
-

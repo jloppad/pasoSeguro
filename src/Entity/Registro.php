@@ -26,6 +26,8 @@ class Registro
 
     #[ORM\ManyToOne(inversedBy: 'registros')]
     private ?Estudiante $estudiante = null;
+    #[ORM\ManyToOne(inversedBy: 'registros')]
+    private ?Grupo $grupo = null;
 
     #[ORM\ManyToOne(inversedBy: 'registros')]
     #[ORM\JoinColumn(nullable: true)]
@@ -91,6 +93,17 @@ class Registro
 
         return $this;
     }
+
+    public function getGrupo(): ?Grupo
+    {
+        return $this->grupo;
+    }
+
+    public function setGrupo(?Grupo $grupo): void
+    {
+        $this->grupo = $grupo;
+    }
+
 
     public function getLlave(): ?Llave
     {

@@ -1,4 +1,27 @@
 {% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/estudiantes.css') }}">
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
+
 {% block body %}
-    <p>Exterior</p>
+<div class="container">
+    <div class="cards-container">
+        {% for estudiante in estudiantes %}
+        <div class="card active-card" data-student-id="{{ estudiante.id }}">
+            <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ estudiante.apellidos }}">
+            <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+
+            <label>
+                <input type="checkbox" value="{{ registro.motivo }}">
+                Llave
+            </label>
+            <p class="hora-salida"><i class="'fa-solid', 'fa-person-walking-dashed-line-arrow-right'"></i></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
 {% endblock %}

@@ -13,7 +13,7 @@
         <h1>Estudiantes de {{ grupo }}</h1>
         <div class="cards-container">
             {% for estudiante in estudiantes %}
-                <div class="card inactive-card" data-student-id="{{ estudiante.id }}">
+                <div class="card inactive-card" data-student-id="{{ estudiante.id }}" data-group-id="{{ grupo.id }}">
                     <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ estudiante.apellidos }}">
                     <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
                     <ul>

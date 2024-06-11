@@ -103,6 +103,7 @@ class AppFixtures extends Fixture
                 'horaEntrada' => $horaEntrada,
                 'responsable' => UsuarioFactory::random(['docente' => true]),
                 'estudiante' => EstudianteFactory::random(),
+                'grupo' => GrupoFactory::random(),
                 'motivos' => $motivosAleatorios,
                 'llave' => RegistroFactory::faker()->boolean(50) ? null : LlaveFactory::createOne([
                     'descripcion' => $motivosAleatorios[array_rand($motivosAleatorios)]->getDescripcion(),

@@ -5,6 +5,7 @@ function main() {
         checkbox.addEventListener('change', function() {
             const card = this.closest('.card');
             const studentId = card.dataset.studentId;
+            const groupId = card.dataset.groupId; // Asegúrate de que el grupo se pase en el request
             const motivo = this.value;
             const isChecked = this.checked;
             const allCheckboxes = Array.from(card.querySelectorAll('input[type="checkbox"]')).map(checkbox => {
@@ -23,6 +24,7 @@ function main() {
                 },
                 body: JSON.stringify({
                     studentId: studentId,
+                    groupId: groupId,
                     motivo: motivo,
                     isChecked: isChecked,
                     allCheckboxes: allCheckboxes

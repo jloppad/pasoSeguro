@@ -27,6 +27,9 @@ class Grupo
     #[ORM\ManyToMany(targetEntity: Estudiante::class, inversedBy: 'grupos')]
     private Collection $estudiantes;
 
+    #[ORM\OneToMany(targetEntity: Registro::class, mappedBy: 'grupo')]
+    private Collection $registros;
+
     public function __construct()
     {
         $this->docentes = new ArrayCollection();
@@ -66,6 +69,17 @@ class Grupo
 
         return $this;
     }
+
+    public function getRegistros(): Collection
+    {
+        return $this->registros;
+    }
+
+    public function setRegistros(Collection $registros): void
+    {
+        $this->registros = $registros;
+    }
+
 
     /**
      * @return Collection<int, Usuario>
