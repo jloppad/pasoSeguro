@@ -17,6 +17,7 @@ h1 {
     text-align: left;
     box-sizing: border-box;
     background-color: white;
+    height: 19em;
 }
 
 .inactive-card {
@@ -37,11 +38,13 @@ h1 {
 .card h2 {
     font-size: 18px;
     margin: 10px 0;
+    height: 17%;
 }
 
 .card ul {
     list-style-type: none;
     padding: 0;
+    margin-bottom: 1em;
 }
 
 .card ul li {
@@ -54,6 +57,10 @@ h1 {
     width: 20px;
     height: 20px;
     margin-right: 10px;
+}
+
+.hora-salida {
+    text-align: center;
 }
 
 /* Estilos para el botón */
@@ -84,5 +91,9 @@ h1 {
 @media (max-width: 500px) {
     .card {
         width: 10em;
+        height: 20em;
+    }
+    .card h2 {
+        height: 20%;
     }
 }

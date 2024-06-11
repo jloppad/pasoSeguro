@@ -1,14 +1,12 @@
 document.addEventListener('DOMContentLoaded', main);
 
 function main() {
-
     document.querySelectorAll('.card input[type="checkbox"]').forEach(checkbox => {
-
         checkbox.addEventListener('change', function() {
-            const card = this.closest('.card');  // Obtiene el contenedor más cercano que tiene la clase "card"
-            const studentId = card.dataset.studentId;  // Obtiene el ID del estudiante de un atributo de datos del contenedor
-            const motivo = this.value;  // Obtiene el valor del checkbox, que es el motivo
-            const isChecked = this.checked;  // Verifica si el checkbox está marcado
+            const card = this.closest('.card');
+            const studentId = card.dataset.studentId;
+            const motivo = this.value;
+            const isChecked = this.checked;
             const allCheckboxes = Array.from(card.querySelectorAll('input[type="checkbox"]')).map(checkbox => {
                 return {
                     value: checkbox.value,
@@ -17,31 +15,44 @@ function main() {
             });
 
             fetch('/registro/update', {
-                method: 'POST',  // Método HTTP utilizado para la solicitud
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',  // Tipo de contenido de la solicitud
-                    'X-Requested-With': 'XMLHttpRequest',  // Indica que es una solicitud AJAX
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')  // Token CSRF para seguridad
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
                 body: JSON.stringify({
-                    studentId: studentId,  // ID del estudiante
-                    motivo: motivo,  // Motivo
-                    isChecked: isChecked,  // Estado del checkbox (marcado o no)
-                    allCheckboxes: allCheckboxes  // Estado de todos los checkboxes en la tarjeta
+                    studentId: studentId,
+                    motivo: motivo,
+                    isChecked: isChecked,
+                    allCheckboxes: allCheckboxes
                 })
             })
                 .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const horaSalidaElement = card.querySelector('.hora-salida');
+                        const anyChecked = allCheckboxes.some(checkbox => checkbox.checked);
+
+                        horaSalidaElement.innerHTML = '';
+
+                        if (anyChecked && data.horaSalida) {
+                            let icon = document.createElement('i');
+                            icon.classList.add('fa-solid', 'fa-person-walking-dashed-line-arrow-right');
+                            horaSalidaElement.appendChild(icon);
+                            horaSalidaElement.appendChild(document.createTextNode(`  ${data.horaSalida}`));
+                        }
+                    }
+                });
         });
     });
+
     update_all();
 }
 
 function update_all() {
-    // Agregar listener para beforeunload
     window.addEventListener('beforeunload', function(event) {
         fetch('/registro/update_all');
-        // Mostramos una alerta para que el navegador espere a que se complete la solicitud
         event.returnValue = 'Hay registros abiertos. ¿Está seguro que desea salir?';
     });
 }
-
