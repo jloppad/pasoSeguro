@@ -43,7 +43,7 @@ class GrupoController extends AbstractController
     {
         $estudiantes = $grupoRepository->findEstudiantesByGrupo($id);
 
-        $motivos = $motivoRepository->findAll();
+        $motivos = $motivoRepository->findByOrder('numeroOrden');
 
         $grupo = $grupoRepository->find($id);
 
