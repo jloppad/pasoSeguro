@@ -6,16 +6,10 @@ function main() {
             const card = this.closest('.card');
             const studentId = card.dataset.studentId;
             const groupId = card.dataset.groupId;
-            const motivo = this.value;
+            const descripcion = this.value;
             const isChecked = this.checked;
-            const allCheckboxes = Array.from(card.querySelectorAll('input[type="checkbox"]')).map(checkbox => {
-                return {
-                    value: checkbox.value,
-                    checked: checkbox.checked
-                };
-            });
 
-            fetch('/registro/update', {
+            fetch('/llave/toggle', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,24 +19,23 @@ function main() {
                 body: JSON.stringify({
                     studentId: studentId,
                     groupId: groupId,
-                    motivo: motivo,
-                    isChecked: isChecked,
-                    allCheckboxes: allCheckboxes
+                    descripcion: descripcion,
+                    isChecked: isChecked
                 })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const horaSalidaElement = card.querySelector('.hora-salida');
-                        const anyChecked = allCheckboxes.some(checkbox => checkbox.checked);
+                        const horaDejadaElement = card.querySelector('.hora-dejada');
 
-                        horaSalidaElement.innerHTML = '';
-
-                        if (anyChecked && data.horaSalida) {
+                        if (isChecked && data.horaDejada) {
                             let icon = document.createElement('i');
-                            icon.classList.add('fa-solid', 'fa-person-walking-dashed-line-arrow-right');
-                            horaSalidaElement.appendChild(icon);
-                            horaSalidaElement.appendChild(document.createTextNode(`  ${data.horaSalida}`));
+                            icon.classList.add('fa-solid', 'fa-key');
+                            horaDejadaElement.innerHTML = '';
+                            horaDejadaElement.appendChild(icon);
+                            horaDejadaElement.appendChild(document.createTextNode(` ${data.horaDejada}`));
+                        } else {
+                            horaDejadaElement.innerHTML = '';
                         }
                     }
                 });

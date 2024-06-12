@@ -15,7 +15,7 @@
             {% for estudiante in estudiantes %}
                 <div class="card inactive-card" data-student-id="{{ estudiante.id }}" data-group-id="{{ grupo.id }}">
                     <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ estudiante.apellidos }}">
-                    <h2>{{ estudiante.nombre }} {{ estudiante.apellidos }}</h2>
+                    <h2>{{ estudiante.apellidos }}, {{ estudiante.nombre }}</h2>
                     <ul>
                         {% for motivo in motivos %}
                             <li><label>

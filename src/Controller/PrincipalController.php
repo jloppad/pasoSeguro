@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\EstudianteRepository;
+use App\Repository\RegistroRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,8 +46,11 @@ class PrincipalController extends AbstractController
 
     #[IsGranted('ROLE_CONSERJE')]
     #[Route('/exterior', name: 'exterior')]
-    public function exterior(): Response
+    public function exterior(RegistroRepository $registroRepository): Response
     {
-        return $this->render("listados/exterior.html.twig");
+        $registros = $registroRepository->findAllOut();
+        return $this->render("listados/exterior.html.twig", [
+            "registros" => $registros
+            ]);
     }
 }

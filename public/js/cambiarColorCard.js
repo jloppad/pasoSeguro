@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', main);
 
 function main() {
     const checkboxes = document.querySelectorAll(".card input[type='checkbox']");
-
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener("change", function() {
             const card = this.closest(".card");

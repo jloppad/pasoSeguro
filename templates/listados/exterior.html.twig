@@ -1,32 +1,45 @@
 {% extends 'layout.html.twig' %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/estudiantes.css') }}">
+    {% if registros is defined and registros|length > 0 %}
+        <link rel="stylesheet" href="{{ asset('css/exterior.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ asset('css/seleccionar_grupo.css') }}">
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
-
+    <script src="{{ asset('js/controlarLlave.js') }}"></script>
+    <script src="{{ asset('js/cambiarColorCard.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <div class="cards-container">
-            {% if estudiantes is defined and estudiantes|length > 0 %}
+        <h1>Listado de Estudiantes Fuera de Clase</h1>
+        {% if registros is defined and registros|length > 0 %}
+            <div class="cards-container">
                 {% for registro in registros %}
-                    <div class="card active-card">
+                    <div class="card inactive-card" data-student-id="{{ registro.estudiante.id }}" data-group-id="{{ registro.grupo.id }}">
                         <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ registro.estudiante.apellidos }}">
-                        <h2>{{ registro.estudiante.nombre }} {{ registro.estudiante.apellidos }}</h2>
-                        <h3>{{ registro.curso }}</h3>
-                        <p>{{ registro.horaSalida }}</p>
+                        <h2>{{ registro.estudiante.apellidos }}, {{ registro.estudiante.nombre }}</h2>
+                        <h3>{{ registro.grupo }}</h3>
+                        <ul>
+                            {% for motivo in registro.motivos %}
+                                <li>{{ motivo }}</li>
+                            {% endfor %}
+                        </ul>
                         <label>
-                            <input type="checkbox" value="{{ registro.motivo }}">
+                            <input type="checkbox" value="{% for motivo in registro.motivos %}{{ motivo }} {% endfor %}">
                             Llave
                         </label>
-                        <p class="hora-salida"><i class="'fa-solid', 'fa-person-walking-dashed-line-arrow-right'"></i></p>
+                        <p class="hora-dejada"></p>
+                        <p class="hora-salida"><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i> {{ registro.horaSalida|date('H:i:s') }}</p>
                     </div>
                 {% endfor %}
-            {% else %}
-                <p>No hay ningun estudiante fuera</p>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            <div id="popup" class="popup">
+                <p class="">No hay ningun estudiante fuera</p>
+            </div>
+        {% endif %}
     </div>
     <meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
 {% endblock %}

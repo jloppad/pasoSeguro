@@ -66,6 +66,7 @@ class GrupoRepository extends ServiceEntityRepository
             ->where('g.id = :grupoId')
             ->setParameter('grupoId', $grupoId)
             ->select('e.id, e.nombre, e.apellidos, e.nie, e.foto')
+            ->orderBy('e.apellidos')
             ->getQuery()
             ->getResult();
     }
