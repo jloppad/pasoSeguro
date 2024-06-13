@@ -5,6 +5,41 @@
 {% block javascripts %}
     <script src="{{ asset('js/cambiarColorCard.js') }}"></script>
     <script src="{{ asset('js/controlarRegistro.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Selecciona todos los botones "Ausente"
+            const absentButtons = document.querySelectorAll('.card button');
+
+            absentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = button.closest('.card');
+
+                    // Evita marcar como ausente si la tarjeta está activa
+                    if (card.classList.contains('active-card')) {
+                        return;
+                    }
+
+                    // Alternar el estado de ausencia
+                    if (card.classList.contains('absent-card')) {
+                        // Si ya está ausente, se revierte el estado
+                        card.classList.remove('absent-card');
+                        card.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.disabled = false;
+                        });
+                        button.textContent = 'Ausente';
+                    } else {
+                        // Si no está ausente, se marca como ausente
+                        card.classList.add('absent-card');
+                        card.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.disabled = true;
+                        });
+                        button.textContent = 'Ausente';
+                    }
+                });
+            });
+        });
+
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -24,6 +59,7 @@
                         {% endfor %}
                     </ul>
                     <p class="hora-salida"></p>
+                    <button>Presente</button>
                 </div>
             {% endfor %}
         </div>
