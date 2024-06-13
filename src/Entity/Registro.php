@@ -140,4 +140,17 @@ class Registro
 
         return $this;
     }
+
+    public function getDuracion(): ?string
+    {
+        if ($this->horaEntrada && $this->horaSalida) {
+            $interval = $this->horaEntrada->diff($this->horaSalida);
+            $totalMinutes = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+            return $totalMinutes . ' minutos';
+        }
+
+        return null;
+    }
+
+
 }

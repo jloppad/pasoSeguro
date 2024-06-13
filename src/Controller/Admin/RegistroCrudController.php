@@ -4,9 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Registro;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class RegistroCrudController extends AbstractCrudController
@@ -16,15 +16,24 @@ class RegistroCrudController extends AbstractCrudController
         return Registro::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
-            DateTimeField::new('horaSalida', 'Your Date/Time Label')
-                ->setFormat('short', 'short'),
-            DateTimeField::new('horaEntrada', 'Your Date/Time Label')
-                ->setFormat('short', 'short'),
+            IdField::new('id')->hideOnForm(),
+            AssociationField::new('estudiante', 'Estudiante'),
+            AssociationField::new('grupo', 'Grupo'),
+            AssociationField::new('responsable', 'Responsable'),
+            AssociationField::new('llave', 'Llave'),
+            AssociationField::new('motivos', 'Motivos'),
+            DateTimeField::new('horaSalida', 'Hora de Salida'),
+            DateTimeField::new('horaEntrada', 'Hora de Entrada'),
+            TextField::new('duracion', 'Duración')
+                ->onlyOnIndex()
+                ->formatValue(function ($value, $entity) {
+                    return $entity->getDuracion();
+                }),
         ];
     }
-
 }
+
+
