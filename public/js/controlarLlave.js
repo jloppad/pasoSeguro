@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', main);
-
-function main() {
+function initControlarLlave() {
     document.querySelectorAll('.card input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const card = this.closest('.card');
@@ -41,5 +39,6 @@ function main() {
                 });
         });
     });
-
 }
+
+document.addEventListener('DOMContentLoaded', initControlarLlave);

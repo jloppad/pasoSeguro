@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', main);
-
-function main() {
+function initCambiarColorCard() {
     const checkboxes = document.querySelectorAll(".card input[type='checkbox']");
 
     checkboxes.forEach(function(checkbox) {
@@ -24,3 +22,5 @@ function cambiarClase(checkbox) {
         }
     }
 }
+
+document.addEventListener('DOMContentLoaded', initCambiarColorCard);

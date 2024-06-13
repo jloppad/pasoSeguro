@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistroController extends AbstractController
@@ -83,5 +84,14 @@ class RegistroController extends AbstractController
         $em->flush();
 
         return new JsonResponse(['success' => true]);
+    }
+
+    #[Route('/exterior/datos', name: 'exterior_datos')]
+    public function exteriorDatos(RegistroRepository $registroRepository): Response
+    {
+        $registros = $registroRepository->findAllOut();
+        return $this->render('listados/_registros.html.twig', [
+            'registros' => $registros,
+        ]);
     }
 }

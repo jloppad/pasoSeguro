@@ -1,45 +1,44 @@
 {% extends 'layout.html.twig' %}
 {% block stylesheets %}
-    {% if registros is defined and registros|length > 0 %}
-        <link rel="stylesheet" href="{{ asset('css/exterior.css') }}">
-    {% else %}
-        <link rel="stylesheet" href="{{ asset('css/seleccionar_grupo.css') }}">
-    {% endif %}
+    <link rel="stylesheet" href="{{ asset('css/exterior.css') }}">
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/controlarLlave.js') }}"></script>
     <script src="{{ asset('js/cambiarColorCard.js') }}"></script>
+    <script src="{{ asset('js/actualizarContenidoCard.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        {% if registros is defined and registros|length > 0 %}
-            <h1>Listado de Estudiantes Fuera de Clase</h1>
-            <div class="cards-container">
-                {% for registro in registros %}
-                    <div class="card inactive-card" data-student-id="{{ registro.estudiante.id }}" data-group-id="{{ registro.grupo.id }}">
-                        <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ registro.estudiante.apellidos }}">
-                        <h2>{{ registro.estudiante.apellidos }}, {{ registro.estudiante.nombre }}</h2>
-                        <h3>{{ registro.grupo }}</h3>
-                        <ul>
-                            {% for motivo in registro.motivos %}
-                                <li>{{ motivo }}</li>
-                            {% endfor %}
-                        </ul>
-                        <label>
-                            <input type="checkbox" value="{% for motivo in registro.motivos %}{{ motivo }} {% endfor %}" {% if registro.llave is not null and registro.llave.horaDevuelta is null %} checked="checked" {% endif %}>
-                            Llave
-                        </label>
-                        <p class="hora-dejada">{% if registro.llave is not null and registro.llave.horaDevuelta is null %}<i class="fa-solid fa-key"></i> {{ registro.llave.horaDejada|date('H:i:s') }} {% endif %}</p>
-                        <p class="hora-salida"><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i> {{ registro.horaSalida|date('H:i:s') }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div id="popup" class="popup">
-                <p class="">No hay ningun estudiante fuera</p>
-            </div>
-        {% endif %}
+        <div id="registros-container">
+            {% if registros is defined and registros|length > 0 %}
+                <h1>Listado de Estudiantes Fuera de Clase</h1>
+                <div class="cards-container">
+                    {% for registro in registros %}
+                        <div class="card inactive-card" data-student-id="{{ registro.estudiante.id }}" data-group-id="{{ registro.grupo.id }}">
+                            <img src="{{ asset('img/foto_default.jpeg') }}" alt="{{ registro.estudiante.apellidos }}">
+                            <h2>{{ registro.estudiante.apellidos }}, {{ registro.estudiante.nombre }}</h2>
+                            <h3>{{ registro.grupo }}</h3>
+                            <ul>
+                                {% for motivo in registro.motivos %}
+                                    <li>{{ motivo }}</li>
+                                {% endfor %}
+                            </ul>
+                            <label>
+                                <input type="checkbox" value="{% for motivo in registro.motivos %}{{ motivo }} {% endfor %}" {% if registro.llave is not null and registro.llave.horaDevuelta is null %} checked="checked" {% endif %}>
+                                Llave
+                            </label>
+                            <p class="hora-dejada">{% if registro.llave is not null and registro.llave.horaDevuelta is null %}<i class="fa-solid fa-key"></i> {{ registro.llave.horaDejada|date('H:i:s') }} {% endif %}</p>
+                            <p class="hora-salida"><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i> {{ registro.horaSalida|date('H:i:s') }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div id="popup" class="popup">
+                    <p>No hay ningun estudiante fuera</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
     <meta name="csrf-token" content="{{ csrf_token('csrf_token') }}">
 {% endblock %}
