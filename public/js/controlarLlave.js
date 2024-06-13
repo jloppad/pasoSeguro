@@ -42,12 +42,4 @@ function main() {
         });
     });
 
-    update_all();
-}
-
-function update_all() {
-    window.addEventListener('beforeunload', function(event) {
-        fetch('/registro/update_all');
-        event.returnValue = 'Hay registros abiertos. ¿Está seguro que desea salir?';
-    });
 }

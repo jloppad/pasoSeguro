@@ -42,7 +42,7 @@ class LlaveController extends AbstractController
 
             return new JsonResponse(['success' => true, 'horaDejada' => $llave->getHoraDejada()->format('H:i:s')]);
         } else {
-            // Solo actualizar horaDevuelta
+
             $llave = $registro->getLlave();
             if ($llave) {
                 $llave->setHoraDevuelta(new \DateTime());

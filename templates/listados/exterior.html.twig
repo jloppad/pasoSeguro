@@ -13,8 +13,8 @@
 
 {% block body %}
     <div class="container">
-        <h1>Listado de Estudiantes Fuera de Clase</h1>
         {% if registros is defined and registros|length > 0 %}
+            <h1>Listado de Estudiantes Fuera de Clase</h1>
             <div class="cards-container">
                 {% for registro in registros %}
                     <div class="card inactive-card" data-student-id="{{ registro.estudiante.id }}" data-group-id="{{ registro.grupo.id }}">
@@ -27,10 +27,10 @@
                             {% endfor %}
                         </ul>
                         <label>
-                            <input type="checkbox" value="{% for motivo in registro.motivos %}{{ motivo }} {% endfor %}">
+                            <input type="checkbox" value="{% for motivo in registro.motivos %}{{ motivo }} {% endfor %}" {% if registro.llave is not null and registro.llave.horaDevuelta is null %} checked="checked" {% endif %}>
                             Llave
                         </label>
-                        <p class="hora-dejada"></p>
+                        <p class="hora-dejada">{% if registro.llave is not null and registro.llave.horaDevuelta is null %}<i class="fa-solid fa-key"></i> {{ registro.llave.horaDejada|date('H:i:s') }} {% endif %}</p>
                         <p class="hora-salida"><i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i> {{ registro.horaSalida|date('H:i:s') }}</p>
                     </div>
                 {% endfor %}
