@@ -1,0 +1,54 @@
+:root {
+    --sidebar-bg:  #461804;
+    --sidebar-menu-color: white;
+    --sidebar-menu-icon-color: white;
+    --sidebar-logo-color: white;
+    --sidebar-menu-active-item-bg: #ca8a50;
+    --sidebar-menu-active-item-color: #461804;
+    --body-bg: #F9F5EE;
+    --table-cell-border-color: #461804;
+    --table-hover-cell-bg: #e8e3de;
+    --link-color: #7a4412;
+    --link-hover-color: #a5754f;
+    --dropdown-color: black;
+    --user-name-color: white;
+}
+
+body, .content-header, table thead tr th a, table thead tr th span, .datagrid thead th, table tbody tr td  {
+    background-color: #F9F5EE;
+}
+
+.btn-primary, .page-item.active .page-link, .form-switch .form-check-input:checked {
+    background-color: #ca8a50;
+    border-color: #bc712d;
+}
+
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+    background-color: #bc712d;
+}
+
+.content-top {
+    background-color: #461804;
+    color: white;
+}
+
+#sidebar-resizer-handler, .form-control .is-blank {
+    background-color: #461804;
+}
+
+.content-top .content-search input[type=search][name=query] {
+    background-color: #59220a;
+}
+
+.content-top .content-search input[type=search][name=query] {
+    background-color: #53200a;
+    color: white;
+}
+
+.content-top .content-search input::placeholder {
+    color: white;
+}
+
+.form-widget i, .content-top .content-search .content-search-icon {
+    color: white;
+}

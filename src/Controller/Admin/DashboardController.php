@@ -10,6 +10,7 @@ use App\Entity\Motivo;
 use App\Entity\Persona;
 use App\Entity\Registro;
 use App\Entity\Usuario;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -53,7 +54,8 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Paso Seguro')
-            ->setFaviconPath('img/logo_recortado.png');
+            ->setFaviconPath('img/logo_recortado.png')
+            ->disableDarkMode();
     }
 
     public function configureMenuItems(): iterable
@@ -77,5 +79,11 @@ class DashboardController extends AbstractDashboardController
         }
         return parent::configureUserMenu($user)
             ->setName($user->getUserName());
+    }
+
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+            ->addCssFile('css/admin.css');
     }
 }
