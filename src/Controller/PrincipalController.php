@@ -2,8 +2,17 @@
 
 namespace App\Controller;
 
+use App\Controller\Admin\CursoAcademicoCrudController;
+use App\Controller\Admin\EstudianteCrudController;
+use App\Controller\Admin\GrupoCrudController;
+use App\Controller\Admin\LlaveCrudController;
+use App\Controller\Admin\MotivoCrudController;
+use App\Controller\Admin\PersonaCrudController;
+use App\Controller\Admin\RegistroCrudController;
+use App\Controller\Admin\UsuarioCrudController;
 use App\Repository\EstudianteRepository;
 use App\Repository\RegistroRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +25,7 @@ class PrincipalController extends AbstractController
     public function home(): Response
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('registro');
+            return $this->redirectToRoute('administracion');
         }
 
         if ($this->isGranted('ROLE_DOCENTE')) {
@@ -38,10 +47,23 @@ class PrincipalController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/registro', name: 'registro')]
-    public function registro(): Response
+    #[Route('/administracion', name: 'administracion')]
+    public function registro(AdminUrlGenerator $adminUrlGenerator): Response
     {
-        return $this->render("listados/registro.html.twig");
+        $urls = [
+            'registros' => $adminUrlGenerator->setController(RegistroCrudController::class)->generateUrl(),
+            'personas' => $adminUrlGenerator->setController(PersonaCrudController::class)->generateUrl(),
+            'usuarios' => $adminUrlGenerator->setController(UsuarioCrudController::class)->generateUrl(),
+            'estudiantes' => $adminUrlGenerator->setController(EstudianteCrudController::class)->generateUrl(),
+            'grupos' => $adminUrlGenerator->setController(GrupoCrudController::class)->generateUrl(),
+            'motivos' => $adminUrlGenerator->setController(MotivoCrudController::class)->generateUrl(),
+            'llaves' => $adminUrlGenerator->setController(LlaveCrudController::class)->generateUrl(),
+            'cursosAcademicos' => $adminUrlGenerator->setController(CursoAcademicoCrudController::class)->generateUrl(),
+        ];
+
+        return $this->render('listados/administracion.html.twig', [
+            'urls' => $urls,
+        ]);
     }
 
     #[IsGranted('ROLE_CONSERJE')]

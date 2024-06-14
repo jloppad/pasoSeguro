@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,6 +27,7 @@ class DashboardController extends AbstractDashboardController
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
@@ -56,15 +58,15 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToUrl('Administracion', 'fa fa-home', 'administracion');
         yield MenuItem::linkToCrud('Registros', 'fas fa-list', Registro::class);
-        yield MenuItem::linkToCrud('Personas', 'fas fa-list', Persona::class);
-        yield MenuItem::linkToCrud('Usuarios', 'fas fa-list', Usuario::class);
-        yield MenuItem::linkToCrud('Estudiantes', 'fas fa-list', Estudiante::class);
-        yield MenuItem::linkToCrud('Grupos', 'fas fa-list', Grupo::class);
-        yield MenuItem::linkToCrud('Motivos', 'fas fa-list', Motivo::class);
-        yield MenuItem::linkToCrud('Llaves', 'fas fa-list', Llave::class);
-        yield MenuItem::linkToCrud('Cursos Academicos', 'fas fa-list', CursoAcademico::class);
+        yield MenuItem::linkToCrud('Personas', 'fa-solid fa-people-group', Persona::class);
+        yield MenuItem::linkToCrud('Usuarios', 'fa-solid fa-user', Usuario::class);
+        yield MenuItem::linkToCrud('Estudiantes', 'fa-solid fa-graduation-cap', Estudiante::class);
+        yield MenuItem::linkToCrud('Grupos', 'fa-solid fa-school', Grupo::class);
+        yield MenuItem::linkToCrud('Motivos', 'fas fa-comments', Motivo::class);
+        yield MenuItem::linkToCrud('Llaves', 'fa-solid fa-key', Llave::class);
+        yield MenuItem::linkToCrud('Cursos Academicos', 'fa-solid fa-calendar', CursoAcademico::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 
@@ -74,6 +76,6 @@ class DashboardController extends AbstractDashboardController
             throw new \Exception('Wrong user');
         }
         return parent::configureUserMenu($user)
-            ->setName($user);
+            ->setName($user->getUserName());
     }
 }

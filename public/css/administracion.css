@@ -1,0 +1,62 @@
+.admin-contaniner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 5em 2em;
+    margin: 5% auto;
+    max-width: 1500px;
+    justify-items: center;
+}
+
+.admin-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    background-color: #ca8a50;
+    border: 1px solid #ca8a50;
+    border-radius: 8px;
+    transition: transform 0.2s, background-color 0.2s;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.admin-item:hover {
+    background-color: #bc712d;
+    transform: scale(1.05);
+}
+
+.admin-item .icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.admin-item .name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0.2em;
+}
+
+@media (max-width: 700px) {
+    .admin-contaniner {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajuste para más elementos por fila */
+        gap: 2em 1em; /* Ajuste de espacio entre los elementos */
+    }
+
+    .admin-item {
+        width: 150px;
+        height: 150px;
+    }
+
+    .admin-item .icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .admin-item .name {
+        font-size: 16px;
+    }
+}

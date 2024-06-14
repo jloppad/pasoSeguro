@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/administracion.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="admin-contaniner">
+        <a href="{{ urls.registros }}" class="admin-item">
+            <i class="fas fa-list icon"></i>
+            <div class="name">Registros</div>
+        </a>
+        <a href="{{ urls.personas }}" class="admin-item">
+            <i class="fa-solid fa-people-group icon"></i>
+            <div class="name">Personas</div>
+        </a>
+        <a href="{{ urls.usuarios }}" class="admin-item">
+            <i class="fa-solid fa-user icon"></i>
+            <div class="name">Usuarios</div>
+        </a>
+        <a href="{{ urls.estudiantes }}" class="admin-item">
+            <i class="fa-solid fa-graduation-cap icon"></i>
+            <div class="name">Estudiantes</div>
+        </a>
+        <a href="{{ urls.grupos }}" class="admin-item">
+            <i class="fa-solid fa-school icon"></i>
+            <div class="name">Grupos</div>
+        </a>
+        <a href="{{ urls.motivos }}" class="admin-item">
+            <i class="fas fa-comments icon"></i>
+            <div class="name">Motivos</div>
+        </a>
+        <a href="{{ urls.llaves }}" class="admin-item">
+            <i class="fa-solid fa-key icon"></i>
+            <div class="name">Llaves</div>
+        </a>
+        <a href="{{ urls.cursosAcademicos }}" class="admin-item">
+            <i class="fa-solid fa-calendar icon"></i>
+            <div class="name">Cursos Académicos</div>
+        </a>
+    </div>
+{% endblock %}

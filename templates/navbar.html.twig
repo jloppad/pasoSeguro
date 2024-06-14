@@ -15,7 +15,7 @@
                 <a href="{{ path('seleccionar_grupo') }}" class="{{ current_path == 'grupo_estudiantes' ? 'active' : '' }}">Listado de Grupo </a>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('registro') }}" class="{{ current_path == 'registro' ? 'active' : '' }}">Registro</a>
+                <a href="{{ path('administracion') }}" class="{{ current_path == 'administracion' ? 'active' : '' }}">Administración</a>
             {% endif %}
         </div>
     </div>
