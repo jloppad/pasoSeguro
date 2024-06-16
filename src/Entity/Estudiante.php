@@ -6,15 +6,21 @@ use App\Repository\EstudianteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EstudianteRepository::class)]
 class Estudiante extends Persona
 {
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Por favor, introduce el NIE.')]
+    #[Assert\Range(
+        notInRangeMessage: 'El NIE debe tener entre 6 y 7 dígitos.',
+        min: 100000,
+        max: 9999999
+    )]
     private ?int $nie = null;
-    // Entre 6 o 7 numeros
 
-    #[ORM\Column(type: 'blob')]
+    #[ORM\Column(type: 'blob', nullable: true)]
     /**
      * @var resource|null $foto
      */
@@ -30,6 +36,11 @@ class Estudiante extends Persona
     {
         $this->grupos = new ArrayCollection();
         $this->registros = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return parent::__toString();
     }
 
     public function getNie(): ?int

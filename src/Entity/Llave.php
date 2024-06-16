@@ -24,13 +24,9 @@ class Llave
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $horaDevuelta = null;
 
-    #[ORM\OneToMany(targetEntity: Registro::class, mappedBy: 'llave')]
-    private Collection $registros;
+    #[ORM\OneToOne(targetEntity: Registro::class)]
+    private ?Registro $registro;
 
-    public function __construct()
-    {
-        $this->registros = new ArrayCollection();
-    }
 
     public function __toString(): string
     {
@@ -78,33 +74,14 @@ class Llave
         return $this;
     }
 
-    /**
-     * @return Collection<int, Registro>
-     */
-    public function getRegistros(): Collection
+    public function getRegistro(): ?Registro
     {
-        return $this->registros;
+        return $this->registro;
     }
 
-    public function addRegistro(Registro $registro): static
+    public function setRegistro(?Registro $registro): void
     {
-        if (!$this->registros->contains($registro)) {
-            $this->registros->add($registro);
-            $registro->setLlave($this);
-        }
-
-        return $this;
+        $this->registro = $registro;
     }
 
-    public function removeRegistro(Registro $registro): static
-    {
-        if ($this->registros->removeElement($registro)) {
-            // set the owning side to null (unless already changed)
-            if ($registro->getLlave() === $this) {
-                $registro->setLlave(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -20,13 +20,20 @@ class RegistroCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            AssociationField::new('estudiante', 'Estudiante'),
+            AssociationField::new('estudiante', 'Estudiante')->hideOnForm(),
             AssociationField::new('grupo', 'Grupo'),
             AssociationField::new('responsable', 'Responsable'),
             AssociationField::new('llave', 'Llave'),
-            AssociationField::new('motivos', 'Motivos'),
-            DateTimeField::new('horaSalida', 'Hora de Salida'),
-            DateTimeField::new('horaEntrada', 'Hora de Entrada'),
+            AssociationField::new('motivos', 'Motivos')->formatValue(function ($value, $entity) {
+                $motivos = $entity->getMotivos();
+                $motivoDescriptions = [];
+                foreach ($motivos as $motivo) {
+                    $motivoDescriptions[] = $motivo->getDescripcion();
+                }
+                return implode(', ', $motivoDescriptions);
+            }),
+            DateTimeField::new('horaSalida', 'Salida'),
+            DateTimeField::new('horaEntrada', 'Entrada'),
             TextField::new('duracion', 'Duración')
                 ->onlyOnIndex()
                 ->formatValue(function ($value, $entity) {

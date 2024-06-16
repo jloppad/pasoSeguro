@@ -12,18 +12,20 @@
     --link-hover-color: #a5754f;
     --dropdown-color: black;
     --user-name-color: white;
+    --badge-secondary-bg: #F9F5EE;
+    --button-primary-bg: #ca8a50;
 }
 
 body, .content-header, table thead tr th a, table thead tr th span, .datagrid thead th, table tbody tr td  {
     background-color: #F9F5EE;
 }
 
-.btn-primary, .page-item.active .page-link, .form-switch .form-check-input:checked {
+.btn-primary, .page-item.active .page-link, .form-switch .form-check-input:checked, .content-top .content-search .content-search-reset {
     background-color: #ca8a50;
     border-color: #bc712d;
 }
 
-.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+.btn-primary:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover, .content-top .content-search .content-search-reset:hover {
     background-color: #bc712d;
 }
 
@@ -43,6 +45,8 @@ body, .content-header, table thead tr th a, table thead tr th span, .datagrid th
 .content-top .content-search input[type=search][name=query] {
     background-color: #53200a;
     color: white;
+    margin-left: 1em;
+    margin-right: 0.5em;
 }
 
 .content-top .content-search input::placeholder {
@@ -51,4 +55,11 @@ body, .content-header, table thead tr th a, table thead tr th span, .datagrid th
 
 .form-widget i, .content-top .content-search .content-search-icon {
     color: white;
+}
+
+.badge.badge-secondary {
+    width: 12em;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: right;
 }

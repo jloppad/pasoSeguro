@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PersonaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonaRepository::class)]
 #[ORM\InheritanceType("JOINED")]
@@ -16,14 +17,28 @@ class Persona
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message: "Por favor, introduce el nombre."
+    )]
+    #[Assert\Regex(
+        pattern: '/^[^0-9]*$/',
+        message: 'El nombre no debe contener números.'
+    )]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message: 'Por favor, introduce los apellidos.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[^0-9]*$/',
+        message: 'Los apellidos no deben contener números.'
+    )]
     private ?string $apellidos = null;
 
     public function __toString(): string
     {
-        return $this->getNombre() . " " . $this->getApellidos();
+        return $this->getApellidos() . ", " . $this->getNombre();
     }
 
     public function getId(): ?int

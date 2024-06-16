@@ -39,6 +39,11 @@ class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUse
         $this->registros = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return parent::__toString();
+    }
+
     public function getUserName(): ?string
     {
         return $this->userName;

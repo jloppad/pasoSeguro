@@ -29,7 +29,7 @@ class Registro
     #[ORM\ManyToOne(inversedBy: 'registros')]
     private ?Grupo $grupo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'registros')]
+    #[ORM\OneToOne(targetEntity: Llave::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Llave $llave = null;
 
@@ -39,6 +39,11 @@ class Registro
     public function __construct()
     {
         $this->motivos = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getId();
     }
 
     public function getId(): ?int

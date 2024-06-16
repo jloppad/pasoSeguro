@@ -10,7 +10,6 @@ use App\Controller\Admin\MotivoCrudController;
 use App\Controller\Admin\PersonaCrudController;
 use App\Controller\Admin\RegistroCrudController;
 use App\Controller\Admin\UsuarioCrudController;
-use App\Repository\EstudianteRepository;
 use App\Repository\RegistroRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
