@@ -22,8 +22,12 @@ class LlaveCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('descripcion', 'Descripción'),
-            DateTimeField::new('horaDejada', 'Hora Dejada'),
-            DateTimeField::new('horaDevuelta', 'Hora Devuelta'),
+            DateTimeField::new('horaDejada', 'Hora Dejada')->setFormTypeOptions([
+                'required' => true,
+            ]),
+            DateTimeField::new('horaDevuelta', 'Hora Devuelta')->setFormTypeOptions([
+                'required' => true,
+            ]),
             AssociationField::new('registro', 'Registro'),
         ];
     }

@@ -8,14 +8,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
 class Usuario extends Persona implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(unique: true)]
+    #[Assert\NotBlank(
+        message: "Por favor, introduce el nombre de usuario."
+    )]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message: "Por favor, introduce la contraseña."
+    )]
     private ?string $password = null;
 
     #[ORM\Column]

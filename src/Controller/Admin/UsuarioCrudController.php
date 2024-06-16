@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UsuarioCrudController extends AbstractCrudController
 {
@@ -25,7 +26,8 @@ class UsuarioCrudController extends AbstractCrudController
             TextField::new('apellidos','Apellidos'),
             TextField::new('nombre','Nombre'),
             TextField::new('userName', 'Nombre de Usuario'),
-            TextField::new('password', 'Contraseña')->onlyOnForms(),
+            TextField::new('password', 'Contraseña')->setFormType(PasswordType::class)
+                ->onlyOnForms(),
             BooleanField::new('docente', 'Docente'),
             BooleanField::new('conserje', 'Conserje'),
             BooleanField::new('admin', 'Admin'),

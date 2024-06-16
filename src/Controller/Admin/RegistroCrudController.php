@@ -20,11 +20,20 @@ class RegistroCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            AssociationField::new('estudiante', 'Estudiante')->hideOnForm(),
-            AssociationField::new('grupo', 'Grupo'),
-            AssociationField::new('responsable', 'Responsable'),
+            AssociationField::new('estudiante', 'Estudiante')->setFormTypeOptions([
+                'required' => true,
+            ]),
+            AssociationField::new('grupo', 'Grupo')->setFormTypeOptions([
+                'required' => true,
+            ]),
+            AssociationField::new('responsable', 'Responsable')->setFormTypeOptions([
+                'required' => true,
+            ]),
             AssociationField::new('llave', 'Llave'),
-            AssociationField::new('motivos', 'Motivos')->formatValue(function ($value, $entity) {
+            AssociationField::new('motivos', 'Motivos')->setFormTypeOptions([
+                'required' => true,
+            ])
+                ->formatValue(function ($value, $entity) {
                 $motivos = $entity->getMotivos();
                 $motivoDescriptions = [];
                 foreach ($motivos as $motivo) {
@@ -32,8 +41,12 @@ class RegistroCrudController extends AbstractCrudController
                 }
                 return implode(', ', $motivoDescriptions);
             }),
-            DateTimeField::new('horaSalida', 'Salida'),
-            DateTimeField::new('horaEntrada', 'Entrada'),
+            DateTimeField::new('horaSalida', 'Salida')->setFormTypeOptions([
+                'required' => true,
+            ]),
+            DateTimeField::new('horaEntrada', 'Entrada')->setFormTypeOptions([
+                'required' => true,
+            ]),
             TextField::new('duracion', 'Duración')
                 ->onlyOnIndex()
                 ->formatValue(function ($value, $entity) {

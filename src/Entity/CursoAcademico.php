@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\CursoAcademicoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CursoAcademicoRepository::class)]
@@ -33,11 +32,6 @@ class CursoAcademico
         $this->grupos = new ArrayCollection();
     }
 
-    public function __toString(): string
-    {
-        return $this->descripcion;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -48,7 +42,7 @@ class CursoAcademico
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): static
+    public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
@@ -60,9 +54,11 @@ class CursoAcademico
         return $this->fechaInicio;
     }
 
-    public function setFechaInicio(\DateTimeInterface $fechaInicio): static
+    public function setFechaInicio(\DateTimeInterface $fechaInicio): self
     {
         $this->fechaInicio = $fechaInicio;
+
+        $this->updateDescripcion();
 
         return $this;
     }
@@ -72,9 +68,11 @@ class CursoAcademico
         return $this->fechaFinal;
     }
 
-    public function setFechaFinal(\DateTimeInterface $fechaFinal): static
+    public function setFechaFinal(\DateTimeInterface $fechaFinal): self
     {
         $this->fechaFinal = $fechaFinal;
+
+        $this->updateDescripcion();
 
         return $this;
     }
@@ -87,7 +85,7 @@ class CursoAcademico
         return $this->grupos;
     }
 
-    public function addGrupo(Grupo $grupo): static
+    public function addGrupo(Grupo $grupo): self
     {
         if (!$this->grupos->contains($grupo)) {
             $this->grupos->add($grupo);
@@ -97,7 +95,7 @@ class CursoAcademico
         return $this;
     }
 
-    public function removeGrupo(Grupo $grupo): static
+    public function removeGrupo(Grupo $grupo): self
     {
         if ($this->grupos->removeElement($grupo)) {
             // set the owning side to null (unless already changed)
@@ -107,5 +105,12 @@ class CursoAcademico
         }
 
         return $this;
+    }
+
+    private function updateDescripcion(): void
+    {
+        if ($this->fechaInicio && $this->fechaFinal) {
+            $this->descripcion = $this->fechaInicio->format('Y') . '/' . $this->fechaFinal->format('Y');
+        }
     }
 }

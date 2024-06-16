@@ -20,7 +20,7 @@ class CursoAcademicoCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('descripcion', 'Descripción'),
+            TextField::new('descripcion', 'Descripción')->hideOnForm(),
             DateField::new('fechaInicio', 'Fecha de Inicio'),
             DateField::new('fechaFinal', 'Fecha Final'),
             AssociationField::new('grupos', 'Grupos')->autocomplete(),
