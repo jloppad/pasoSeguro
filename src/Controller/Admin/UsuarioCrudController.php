@@ -37,7 +37,7 @@ class UsuarioCrudController extends AbstractCrudController
                 }
                 return implode(', ', $gruposDescriptions);
             }),
-            AssociationField::new('registros', 'Registros')->hideOnForm(),
+            AssociationField::new('registros', 'Registros'),
         ];
     }
 }
