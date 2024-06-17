@@ -58,7 +58,11 @@ class GrupoController extends AbstractController
     public function redirigirGrupo(Request $request): Response
     {
         $grupoId = $request->get('grupo');
-        return $this->redirectToRoute('grupo_estudiantes', ['id' => $grupoId]);
+        if ($grupoId == "exterior") {
+            return $this->redirectToRoute('exterior');
+        } else {
+            return $this->redirectToRoute('grupo_estudiantes', ['id' => $grupoId]);
+        }
     }
 }
 
