@@ -64,8 +64,6 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "chmod -R 755 var",
-            "chmod -R 755 public"
         ],
         "post-update-cmd": [
             "@auto-scripts"
